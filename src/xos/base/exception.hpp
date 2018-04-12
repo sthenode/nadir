@@ -25,7 +25,7 @@
 
 namespace xos {
 
-typedef int exception_status ;
+typedef int exception_status;
 enum {
     exception_success,
     exception_failed
@@ -54,7 +54,7 @@ public:
     typedef TChar char_t;
 
     virtual string_t status_to_string() const {
-        return exception_status_to_string(status());
+        return exception_status_to_string<string_t>(this->status());
     }
     virtual status_t status() const { 
         return exception_failed; 

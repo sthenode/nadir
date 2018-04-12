@@ -25,7 +25,8 @@
 
 namespace xos {
 
-enum create_status {
+typedef int create_status;
+enum {
     destroy_success,
     create_success = destroy_success,
     create_failed,
@@ -64,7 +65,7 @@ public:
     }
 
     virtual string_t status_to_string() const {
-        return create_status_to_string(this->status());
+        return create_status_to_string<string_t>(this->status());
     }
 };
 typedef create_exceptiont<> create_exception;
@@ -95,6 +96,15 @@ public:
             }
         }
         return false;
+    }
+    virtual bool created() {
+        if (!(this->is_created())) {
+            if ((this->create())) {
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
     virtual bool destroyed() {
         if ((this->is_created())) {

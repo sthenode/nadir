@@ -13,32 +13,26 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: version.hpp
+///   File: io.cpp
 ///
 /// Author: $author$
-///   Date: 4/2/2018
+///   Date: 4/6/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_LIB_NADIR_VERSION_HPP
-#define _XOS_LIB_NADIR_VERSION_HPP
-
-#include "xos/lib/version.hpp"
+#include "xos/console/io.hpp"
 
 namespace xos {
-namespace lib {
-namespace nadir {
+namespace console {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: version
+///  Class: io_baset
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS version {
-public:
-    static const lib::version& which();
-};
 
-} /// namespace nadir
-} /// namespace lib
+///////////////////////////////////////////////////////////////////////
+///  Class: iot
+///////////////////////////////////////////////////////////////////////
+
+} /// namespace console
 } /// namespace xos
 
-#endif /// _XOS_LIB_NADIR_VERSION_HPP 
         
 

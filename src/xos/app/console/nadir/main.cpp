@@ -13,68 +13,31 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: version.cpp
+///   File: main.cpp
 ///
 /// Author: $author$
-///   Date: 4/2/2018
+///   Date: 4/4/2018
 ///////////////////////////////////////////////////////////////////////
-#include "xos/lib/nadir/version.hpp"
-
-#if !defined(XOS_LIB_NADIR_VERSION_NAME)
-#define XOS_LIB_NADIR_VERSION_NAME "nadir"
-#endif /// !defined(XOS_LIB_NADIR_VERSION_NAME)
-
-#if !defined(XOS_LIB_NADIR_VERSION_MAJOR)
-#define XOS_LIB_NADIR_VERSION_MAJOR 0
-#endif /// !defined(XOS_LIB_NADIR_VERSION_MAJOR)
-
-#if !defined(XOS_LIB_NADIR_VERSION_MINOR)
-#define XOS_LIB_NADIR_VERSION_MINOR 0
-#endif /// !defined(XOS_LIB_NADIR_VERSION_MINOR)
-
-#if !defined(XOS_LIB_NADIR_VERSION_RELEASE)
-#define XOS_LIB_NADIR_VERSION_RELEASE 0
-#endif /// !defined(XOS_LIB_NADIR_VERSION_RELEASE)
+#include "xos/app/console/nadir/main.hpp"
 
 namespace xos {
-namespace lib {
+namespace app {
+namespace console {
 namespace nadir {
 
-namespace which {
-
-typedef lib::version version_implements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: version
+///  Class: main_implementt
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS version: virtual public version_implements {
-public:
-    typedef version_implements implements;
-    version() {
-    }
-    virtual const char_t* name() const {
-        return XOS_LIB_NADIR_VERSION_NAME;
-    }
-    virtual unsigned major() const {
-        return XOS_LIB_NADIR_VERSION_MAJOR;
-    }
-    virtual unsigned minor() const {
-        return XOS_LIB_NADIR_VERSION_MINOR;
-    }
-    virtual unsigned release() const {
-        return XOS_LIB_NADIR_VERSION_RELEASE;
-    }
-};
-
-} /// namespace which
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: version
+///  Class: maint
 ///////////////////////////////////////////////////////////////////////
-const lib::version& version::which() {
-    static const which::version version;
-    return version;
-}
+static main the_main;
 
 } /// namespace nadir
-} /// namespace lib
+} /// namespace console
+} /// namespace app
 } /// namespace xos
+
+        
+

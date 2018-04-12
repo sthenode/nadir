@@ -67,7 +67,19 @@ public:
     typedef TEnd end_t;
     static const end_t endof = VEnd;
 
-    char_stringt(const char_stringt &copy) {
+    char_stringt(const char* chars, size_t length) {
+        this->append(chars, length);
+    }
+    char_stringt(const char* chars) {
+        this->append(chars);
+    }
+    char_stringt(const wchar_t* chars, size_t length) {
+        this->append(chars, length);
+    }
+    char_stringt(const wchar_t* chars) {
+        this->append(chars);
+    }
+    char_stringt(const char_stringt &copy): extends(copy) {
     }
     char_stringt() {
     }

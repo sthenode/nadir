@@ -13,68 +13,69 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: version.cpp
+///   File: version.hpp
 ///
 /// Author: $author$
-///   Date: 4/2/2018
+///   Date: 4/3/2018
 ///////////////////////////////////////////////////////////////////////
-#include "xos/lib/nadir/version.hpp"
+#ifndef _XOS_LIB_VERSION_HPP
+#define _XOS_LIB_VERSION_HPP
 
-#if !defined(XOS_LIB_NADIR_VERSION_NAME)
-#define XOS_LIB_NADIR_VERSION_NAME "nadir"
-#endif /// !defined(XOS_LIB_NADIR_VERSION_NAME)
-
-#if !defined(XOS_LIB_NADIR_VERSION_MAJOR)
-#define XOS_LIB_NADIR_VERSION_MAJOR 0
-#endif /// !defined(XOS_LIB_NADIR_VERSION_MAJOR)
-
-#if !defined(XOS_LIB_NADIR_VERSION_MINOR)
-#define XOS_LIB_NADIR_VERSION_MINOR 0
-#endif /// !defined(XOS_LIB_NADIR_VERSION_MINOR)
-
-#if !defined(XOS_LIB_NADIR_VERSION_RELEASE)
-#define XOS_LIB_NADIR_VERSION_RELEASE 0
-#endif /// !defined(XOS_LIB_NADIR_VERSION_RELEASE)
+#include "xos/base/string.hpp"
 
 namespace xos {
 namespace lib {
-namespace nadir {
 
-namespace which {
-
-typedef lib::version version_implements;
+typedef implement_base versiont_implements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: version
+///  Class: versiont
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS version: virtual public version_implements {
+template 
+<class TChar = char, 
+ class TString = char_stringt<TChar>,
+ class TImplements = versiont_implements>
+class _EXPORT_CLASS versiont: virtual public TImplements {
 public:
-    typedef version_implements implements;
-    version() {
+    typedef TImplements implements;
+    typedef TString string_t;
+    
+    virtual string_t to_string() const {
+        string_t to(this->name());
+        to.append(this->name_separator());
+        to.append_unsigned(this->major());
+        to.append(this->major_separator());
+        to.append_unsigned(this->minor());
+        to.append(this->minor_separator());
+        to.append_unsigned(this->release());
+        return to;
     }
+
     virtual const char_t* name() const {
-        return XOS_LIB_NADIR_VERSION_NAME;
+        return "version";
     }
+    virtual const char_t* name_separator() const {
+        return "-";
+    }
+    virtual const char_t* major_separator() const {
+        return ".";
+    }
+    virtual const char_t* minor_separator() const {
+        return ".";
+    }
+
     virtual unsigned major() const {
-        return XOS_LIB_NADIR_VERSION_MAJOR;
+        return 0;
     }
     virtual unsigned minor() const {
-        return XOS_LIB_NADIR_VERSION_MINOR;
+        return 0;
     }
     virtual unsigned release() const {
-        return XOS_LIB_NADIR_VERSION_RELEASE;
+        return 0;
     }
 };
+typedef versiont<> version;
 
-} /// namespace which
-
-///////////////////////////////////////////////////////////////////////
-///  Class: version
-///////////////////////////////////////////////////////////////////////
-const lib::version& version::which() {
-    static const which::version version;
-    return version;
-}
-
-} /// namespace nadir
 } /// namespace lib
 } /// namespace xos
+
+#endif /// _XOS_LIB_VERSION_HPP 

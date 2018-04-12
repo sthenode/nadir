@@ -13,32 +13,33 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: version.hpp
+///   File: main_main.cpp
 ///
 /// Author: $author$
-///   Date: 4/2/2018
+///   Date: 4/4/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_LIB_NADIR_VERSION_HPP
-#define _XOS_LIB_NADIR_VERSION_HPP
-
-#include "xos/lib/version.hpp"
+#include "xos/console/main_main.hpp"
+#include "xos/console/main.hpp"
+#include "xos/io/logger.hpp"
 
 namespace xos {
-namespace lib {
-namespace nadir {
+namespace console {
 
-///////////////////////////////////////////////////////////////////////
-///  Class: version
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS version {
-public:
-    static const lib::version& which();
-};
-
-} /// namespace nadir
-} /// namespace lib
+} /// namespace console
 } /// namespace xos
 
-#endif /// _XOS_LIB_NADIR_VERSION_HPP 
-        
+int main(int argc, char** argv, char** env) {
+    int err = 0;
+    ERR_LOG_DEBUG("try {...");
+    try {
+        LOG_DEBUG("::xos::console::main::the_main(argc, argv, env)...");
+        err = ::xos::console::main::the_main(argc, argv, env);
+        LOG_DEBUG("...err = " << err << " on ::xos::console::main::the_main(argc, argv, env)");
 
+        LOG_DEBUG("...} try");
+    } catch (...) {
+        ERR_LOG_ERROR("...catch (...)");
+        err = 1;
+    }
+    return err;
+}

@@ -26,7 +26,8 @@
 
 namespace xos {
 
-enum attach_status {
+typedef int attach_status;
+enum {
     detach_success,
     attach_success = detach_success,
     attach_failed,
@@ -65,7 +66,7 @@ public:
     }
 
     virtual string_t status_to_string() const {
-        return attach_status_to_string(this->status());
+        return attach_status_to_string<string_t>(this->status());
     }
 };
 typedef attach_exceptiont<> attach_exception;
