@@ -41,7 +41,7 @@ enum {
     unlock_interrupted,
     unlock_invalid
 };
-template <class TString>
+template <class TString = char_string>
 inline const TString lock_status_to_string(lock_status status) {
     switch (status) {
     case lock_success: return TString("lock_success");
@@ -63,17 +63,16 @@ inline const TString lock_status_to_string(lock_status status) {
 ///  Class: lock_exceptiont
 ///////////////////////////////////////////////////////////////////////
 template 
-<typename TStatus = lock_status,
- typename TChar = char, class TString = char_stringt<TChar>,
- class TImplements = exception_implementt<TStatus, TChar, TString>, 
- class TExtends = exceptiont<TStatus, TChar, TString, TImplements> >
+<class TImplements = exception_implementt<lock_status, char, char_string>, 
+ class TExtends = exceptiont<lock_status, char, char_string, TImplements> >
 class _EXPORT_CLASS lock_exceptiont: virtual public TImplements, public TExtends {
 public:
     typedef TImplements implements;
     typedef TExtends extends;
-    typedef TStatus status_t;
-    typedef TString string_t;
-    typedef TChar char_t;
+    
+    typedef typename implements::status_t status_t;
+    typedef typename implements::string_t string_t;
+    typedef typename implements::char_t char_t;
 
     lock_exceptiont(status_t status): extends(status) {
     }
@@ -83,7 +82,7 @@ public:
     }
 
     virtual string_t status_to_string() const {
-        return lock_status_to_string<string_t>(this->status());
+        return lock_status_to_string(this->status());
     }
 };
 typedef lock_exceptiont<> lock_exception;
@@ -148,29 +147,21 @@ typedef base lockt_extends;
 ///  Class: lockt
 ///////////////////////////////////////////////////////////////////////
 template 
-<class TLocked = locked, 
- class TLockException = lock_exception, typename TLockStatus = lock_status,
- TLockStatus VlockFailed = lock_failed, TLockStatus VUnlockFailed = unlock_failed,
- class TImplements = lockt_implements, class TExtends = lockt_extends>
+<class TImplements = lockt_implements, class TExtends = lockt_extends>
 class _EXPORT_CLASS lockt: virtual public TImplements, public TExtends {
 public:
     typedef TImplements implements;
     typedef TExtends extends;
-    typedef TLocked locked_t;
-    typedef TLockException lock_exception_t;
-    typedef TLockStatus lock_status_t;
-    static const lock_status_t lock_failed = VlockFailed;
-    static const lock_status_t unlock_failed = VUnlockFailed;
 
-    lockt(locked_t& locked): locked_(locked) {
+    lockt(locked& _locked): locked_(_locked) {
         if (!(locked_.lock())) {
-            lock_exception_t e(lock_failed);
+            lock_exception e(lock_failed);
             throw (e);
         }
     }
     virtual ~lockt() {
         if (!(locked_.unlock())) {
-            lock_exception_t e(unlock_failed);
+            lock_exception e(unlock_failed);
             throw (e);
         }
     }
@@ -179,12 +170,10 @@ private:
     }
 
 protected:
-    locked_t& locked_;
+    locked& locked_;
 };
 typedef lockt<> lock;
 
 } /// namespace xos
 
 #endif /// _XOS_BASE_LOCKED_HPP 
-        
-
