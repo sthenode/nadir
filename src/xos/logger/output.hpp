@@ -44,30 +44,18 @@ namespace logger {
 #define STDERR_LOG_PLAIN(__message__) 
 #endif /// !defined(STDERR_LOG_PLAIN)
 
-///
-/// STDERR_LOG
-/// 
 #if defined(STDERR_PLAIN_LOGGING)
-///
-/// plain logging
-/// 
 #define STDERR_LOG STDERR_LOG_PLAIN
 #else /// defined(STDERR_PLAIN_LOGGING)
 #if defined(STDERR_FUNCTION_LOGGING)
-///
-/// function logging
-/// 
 #define STDERR_LOG STDERR_LOG_FUNCTION
 #else /// defined(STDERR_FUNCTION_LOGGING)
-///
-/// location logging
-/// 
 #define STDERR_LOG STDERR_LOG_LOCATION
 #endif /// defined(STDERR_FUNCTION_LOGGING)
 #endif /// defined(STDERR_PLAIN_LOGGING)
 
 ///
-/// STDERR_LOG_ TRACE / DEBUG / ERROR
+/// STDERR_LOG_ TRACE .. FATAL
 /// 
 #if !defined(STDERR_LOG_TRACE)
 #if defined(TRACE_BUILD)
@@ -85,27 +73,47 @@ namespace logger {
 #endif /// defined(DEBUG_BUILD)
 #endif /// !defined(STDERR_LOG_DEBUG)
 
+#if !defined(STDERR_LOG_INFO)
+#define STDERR_LOG_INFO(__message__) STDERR_LOG_DEBUG(__message__)
+#endif /// !defined(STDERR_LOG_INFO)
+
 #if !defined(STDERR_LOG_ERROR)
 #define STDERR_LOG_ERROR(__message__) STDERR_LOG(__message__)
 #endif /// !defined(STDERR_LOG_ERROR)
 
-#if !defined(ERR_LOG_TRACE)
-#define ERR_LOG_TRACE(__message__) STDERR_LOG_TRACE(__message__)
-#endif /// !defined(LOG_TRACE)
+#if !defined(STDERR_LOG_WARN)
+#define STDERR_LOG_WARN(__message__) STDERR_LOG_ERROR(__message__)
+#endif /// !defined(STDERR_LOG_WARN)
+
+#if !defined(STDERR_LOG_FATAL)
+#define STDERR_LOG_FATAL(__message__) STDERR_LOG_ERROR(__message__)
+#endif /// !defined(STDERR_LOG_FATAL)
 
 ///
-/// ERR_LOG_ TRACE / DEBUG / ERROR
+/// ERR_LOG_ FATAL .. TRACE
 /// 
-#if !defined(ERR_LOG_TRACE)
-#define ERR_LOG_TRACE(__message__) STDERR_LOG_TRACE(__message__)
-#endif /// !defined(ERR_LOG_TRACE)
+#if !defined(ERR_LOG_FATAL)
+#define ERR_LOG_FATAL(__message__) STDERR_LOG_FATAL(__message__)
+#endif /// !defined(ERR_LOG_FATAL)
+
+#if !defined(ERR_LOG_ERROR)
+#define ERR_LOG_ERROR(__message__) STDERR_LOG_ERROR(__message__)
+#endif /// !defined(ERR_LOG_ERROR)
+
+#if !defined(ERR_LOG_WARN)
+#define ERR_LOG_WARN(__message__) STDERR_LOG_WARN(__message__)
+#endif /// !defined(ERR_LOG_WARN)
+
+#if !defined(ERR_LOG_INFO)
+#define ERR_LOG_INFO(__message__) STDERR_LOG_INFO(__message__)
+#endif /// !defined(ERR_LOG_INFO)
 
 #if !defined(ERR_LOG_DEBUG)
 #define ERR_LOG_DEBUG(__message__) STDERR_LOG_DEBUG(__message__)
 #endif /// !defined(ERR_LOG_DEBUG)
 
-#if !defined(ERR_LOG_ERROR)
-#define ERR_LOG_ERROR(__message__) STDERR_LOG_ERROR(__message__)
-#endif /// !defined(ERR_LOG_ERROR)
+#if !defined(ERR_LOG_TRACE)
+#define ERR_LOG_TRACE(__message__) STDERR_LOG_TRACE(__message__)
+#endif /// !defined(ERR_LOG_TRACE)
 
 #endif /// _XOS_LOGGER_OUTPUT_HPP 

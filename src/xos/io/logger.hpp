@@ -69,19 +69,31 @@ typedef logger_extendt<> logger_extend;
 } /// namespace xos
 
 ///
-/// LOG_ TRACE / DEBUG / ERROR
+/// LOG_ FATAL .. TRACE
 /// 
-#if !defined(LOG_TRACE)
-#define LOG_TRACE(__message__) ERR_LOG_TRACE(__message__)
-#endif /// !defined(LOG_TRACE)
+#if !defined(LOG_FATAL)
+#define LOG_FATAL(__message__) ERR_LOG_FATAL(__message__)
+#endif /// !defined(LOG_FATAL)
+
+#if !defined(LOG_ERROR)
+#define LOG_ERROR(__message__) ERR_LOG_ERROR(__message__)
+#endif /// !defined(LOG_ERROR)
+
+#if !defined(LOG_WARN)
+#define LOG_WARN(__message__) ERR_LOG_WARN(__message__)
+#endif /// !defined(LOG_WARN)
+
+#if !defined(LOG_INFO)
+#define LOG_INFO(__message__) ERR_LOG_INFO(__message__)
+#endif /// !defined(LOG_INFO)
 
 #if !defined(LOG_DEBUG)
 #define LOG_DEBUG(__message__) ERR_LOG_DEBUG(__message__)
 #endif /// !defined(LOG_DEBUG)
 
-#if !defined(LOG_ERROR)
-#define LOG_ERROR(__message__) ERR_LOG_ERROR(__message__)
-#endif /// !defined(LOG_ERROR)
+#if !defined(LOG_TRACE)
+#define LOG_TRACE(__message__) ERR_LOG_TRACE(__message__)
+#endif /// !defined(LOG_TRACE)
 
 #endif /// _XOS_IO_LOGGER_HPP 
         
