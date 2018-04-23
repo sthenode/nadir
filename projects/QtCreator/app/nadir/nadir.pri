@@ -54,6 +54,7 @@ $${nadir_DEFINES} \
 #
 nadir_exe_HEADERS += \
 $${NADIR_SRC}/xos/base/locked.hpp \
+$${NADIR_SRC}/xos/io/logger.hpp \
 $${NADIR_SRC}/xos/console/output.hpp \
 $${NADIR_SRC}/xos/console/std/output.hpp \
 $${NADIR_SRC}/xos/console/error.hpp \
@@ -72,6 +73,7 @@ $${NADIR_SRC}/xos/app/console/nadir/main.hpp \
 #
 nadir_exe_SOURCES += \
 $${NADIR_SRC}/xos/base/locked.cpp \
+$${NADIR_SRC}/xos/io/logger.cpp \
 $${NADIR_SRC}/xos/console/std/output.cpp \
 $${NADIR_SRC}/xos/console/std/error.cpp \
 $${NADIR_SRC}/xos/console/std/input.cpp \

@@ -55,6 +55,7 @@ $${nadir_DEFINES} \
 # libnadir HEADERS
 #
 libnadir_HEADERS += \
+$${NADIR_SRC}/xos/base/base.hpp \
 $${NADIR_SRC}/xos/base/to_char.hpp \
 $${NADIR_SRC}/xos/base/chars.hpp \
 $${NADIR_SRC}/xos/base/array.hpp \
@@ -79,6 +80,7 @@ $${NADIR_SRC}/xos/lib/nadir/version.hpp \
 # libnadir SOURCES
 #
 libnadir_SOURCES += \
+$${NADIR_SRC}/xos/base/base.cpp \
 $${NADIR_SRC}/xos/base/to_char.cpp \
 $${NADIR_SRC}/xos/base/chars.cpp \
 $${NADIR_SRC}/xos/base/array.cpp \
