@@ -33,7 +33,10 @@ typedef implement_base char_string_implementt_implements;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: char_string_implementt
 ///////////////////////////////////////////////////////////////////////
-template <class TImplements = char_string_implementt_implements>
+template 
+<typename TChar = char,
+ typename TEnd = TChar, TEnd VEnd = 0,
+ class TImplements = char_string_implementt_implements>
 class _EXPORT_CLASS char_string_implementt: virtual public TImplements {
 public:
     typedef TImplements implements;
@@ -47,7 +50,7 @@ typedef char_string_implement char_stringt_implements;
 template 
 <typename TChar = char,
  typename TEnd = TChar, TEnd VEnd = 0,
- class TImplement = char_stringt_implements,
+ class TImplement = char_string_implementt<TChar, TEnd, VEnd>,
  class TChars = charst<TChar, TEnd, VEnd, TImplement>,
  class TCharTo = to_chart<TChar, char>,
  class TWCharTo = to_chart<TChar, wchar_t>,
