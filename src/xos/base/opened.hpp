@@ -25,7 +25,8 @@
 
 namespace xos {
 
-enum open_status {
+typedef exception_status open_status;
+enum {
     close_success,
     open_success = close_success,
     open_failed,
@@ -44,7 +45,7 @@ inline const TString open_status_to_string(open_status status) {
 ///  Class: open_exceptiont
 ///////////////////////////////////////////////////////////////////////
 template 
-<typename TStatus = exception_status,
+<typename TStatus = open_status,
  typename TChar = char, class TString = char_stringt<TChar>,
  class TImplements = exception_implementt
  <TStatus, TChar, TString>, class TExtends = exception>
@@ -52,6 +53,7 @@ class _EXPORT_CLASS open_exceptiont: virtual public TImplements, public TExtends
 public:
     typedef TImplements implements;
     typedef TExtends extends;
+
     typedef TStatus status_t;
     typedef TString string_t;
     typedef TChar char_t;
@@ -64,7 +66,7 @@ public:
     }
 
     virtual string_t status_to_string() const {
-        return open_status_to_string(this->status());
+        return open_status_to_string<string_t>(this->status());
     }
 };
 typedef open_exceptiont<> open_exception;

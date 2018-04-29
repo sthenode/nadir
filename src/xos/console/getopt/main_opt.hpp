@@ -72,13 +72,15 @@ public:
     typedef TImplements implements;
     typedef TExtends extends;
 
-    typedef typename implements::string_t string_t;
     typedef typename implements::file_t file_t;
     typedef typename implements::null_file_t null_file_t;
     enum { null_file = implements::null_file};
+
+    typedef typename implements::string_t string_t;
     typedef typename implements::char_t char_t;
     typedef typename implements::end_char_t end_char_t;
     enum { end_char = implements::end_char };
+
     static const char_t fs_path_colon_ = ((char_t)':');
     static const char_t fs_path_bslash_ = ((char_t)'\\');
     static const char_t fs_path_slash_ = ((char_t)'/');
@@ -300,10 +302,11 @@ public:
     typedef TImplements implements;
     typedef TExtends extends;
 
-    typedef typename implements::string_t string_t;
     typedef typename implements::file_t file_t;
     typedef typename implements::null_file_t null_file_t;
     enum { null_file = implements::null_file};
+
+    typedef typename implements::string_t string_t;
     typedef typename implements::char_t char_t;
     typedef typename implements::end_char_t end_char_t;
     enum { end_char = implements::end_char };

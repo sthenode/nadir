@@ -36,10 +36,11 @@ class _EXPORT_CLASS main_implementt: virtual public TImplements {
 public:
     typedef TImplements implements;
 
-    typedef typename implements::string_t string_t;
     typedef typename implements::file_t file_t;
     typedef typename implements::null_file_t null_file_t;
     enum { null_file = implements::null_file};
+
+    typedef typename implements::string_t string_t;
     typedef typename implements::char_t char_t;
     typedef typename implements::end_char_t end_char_t;
     enum { end_char = implements::end_char };
@@ -60,10 +61,11 @@ public:
     typedef TExtends extends;
     typedef maint derives;
 
-    typedef typename implements::string_t string_t;
     typedef typename implements::file_t file_t;
     typedef typename implements::null_file_t null_file_t;
     enum { null_file = implements::null_file};
+
+    typedef typename implements::string_t string_t;
     typedef typename implements::char_t char_t;
     typedef typename implements::end_char_t end_char_t;
     enum { end_char = implements::end_char };
@@ -107,6 +109,16 @@ protected:
     
 protected:
     virtual int run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        err = run(argc, argv);
+        return err;
+    }
+    virtual int run(int argc, char_t** argv) {
+        int err = 0;
+        err = run();
+        return err;
+    }
+    virtual int run() {
         int err = 0;
         return err;
     }

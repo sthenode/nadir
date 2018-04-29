@@ -53,10 +53,11 @@ public:
     typedef TOutImplements out_implements;
     typedef TErrImplements err_implements;
 
-    typedef typename out_implements::string_t string_t;
     typedef typename out_implements::file_t file_t;
     typedef typename out_implements::null_file_t null_file_t;
     enum { null_file = out_implements::null_file};
+
+    typedef typename out_implements::string_t string_t;
     typedef typename out_implements::char_t char_t;
     typedef typename out_implements::end_char_t end_char_t;
     enum { end_char = out_implements::end_char };
