@@ -33,21 +33,35 @@ enum {
 
 #define XOS_CONSOLE_MAIN_HELP_OPT "help"
 #define XOS_CONSOLE_MAIN_HELP_OPTARG_REQUIRED XOS_CONSOLE_MAIN_OPT_ARGUMENT_NONE
+#define XOS_CONSOLE_MAIN_HELP_OPTARG_RESULT 0
 #define XOS_CONSOLE_MAIN_HELP_OPTARG ""
 #define XOS_CONSOLE_MAIN_HELP_OPTUSE "Usage options"
 #define XOS_CONSOLE_MAIN_HELP_OPTVAL_S "h"
 #define XOS_CONSOLE_MAIN_HELP_OPTVAL_C 'h'
-
-#define XOS_CONSOLE_MAIN_HELP_OPTIONS_OPTION \
+#define XOS_CONSOLE_MAIN_HELP_OPTION \
    {XOS_CONSOLE_MAIN_HELP_OPT, \
-    XOS_CONSOLE_MAIN_HELP_OPTARG_REQUIRED, 0, \
-    XOS_CONSOLE_MAIN_HELP_OPTVAL_C},
+    XOS_CONSOLE_MAIN_HELP_OPTARG_REQUIRED, \
+    XOS_CONSOLE_MAIN_HELP_OPTARG_RESULT, \
+    XOS_CONSOLE_MAIN_HELP_OPTVAL_C}, \
 
-#define XOS_CONSOLE_MAIN_OPTIONS_CHARS \
+#define XOS_CONSOLE_MAIN_USAGE_OPT "usage"
+#define XOS_CONSOLE_MAIN_USAGE_OPTARG_REQUIRED XOS_CONSOLE_MAIN_HELP_OPTARG_REQUIRED
+#define XOS_CONSOLE_MAIN_USAGE_OPTARG_RESULT XOS_CONSOLE_MAIN_HELP_OPTARG_RESULT
+#define XOS_CONSOLE_MAIN_USAGE_OPTARG XOS_CONSOLE_MAIN_HELP_OPTARG
+#define XOS_CONSOLE_MAIN_USAGE_OPTUSE XOS_CONSOLE_MAIN_HELP_OPTUSE
+#define XOS_CONSOLE_MAIN_USAGE_OPTVAL_S "u"
+#define XOS_CONSOLE_MAIN_USAGE_OPTVAL_C 'u'
+#define XOS_CONSOLE_MAIN_USAGE_OPTION \
+   {XOS_CONSOLE_MAIN_USAGE_OPT, \
+    XOS_CONSOLE_MAIN_USAGE_OPTARG_REQUIRED, \
+    XOS_CONSOLE_MAIN_USAGE_OPTARG_RESULT, \
+    XOS_CONSOLE_MAIN_USAGE_OPTVAL_C}, \
+
+#define NADIR_CONSOLE_MAIN_OPTIONS_CHARS \
     XOS_CONSOLE_MAIN_HELP_OPTVAL_S
 
-#define XOS_CONSOLE_MAIN_OPTIONS_OPTIONS \
-    XOS_CONSOLE_MAIN_HELP_OPTIONS_OPTION
+#define NADIR_CONSOLE_MAIN_OPTIONS_OPTIONS \
+    XOS_CONSOLE_MAIN_HELP_OPTION
 
 namespace xos {
 
@@ -186,14 +200,6 @@ protected:
         return err;
     }
 
-    virtual int on_usage_option
-    (int optval, const char_t* optarg,
-     const char_t* optname, int optind,
-     int argc, char_t**argv, char_t**env) {
-        int err = 0;
-        err = usage(argc, argv, env);
-        return err;
-    }
     virtual int on_invalid_option
     (int optval, const char_t* optarg,
      const char_t* optname, int optind,
@@ -311,6 +317,20 @@ public:
     typedef typename implements::end_char_t end_char_t;
     enum { end_char = implements::end_char };
 
+    virtual int on_usage_option
+    (int optval, const char_t* optarg,
+     const char_t* optname, int optind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        err = this->usage(argc, argv, env);
+        return err;
+    }
+    virtual const char_t* usage_option_usage
+    (const char_t*& optarg, const struct option* longopt) {
+        const char_t* chars = "";
+        chars = XOS_CONSOLE_MAIN_HELP_OPTUSE;
+        return chars;
+    }
     virtual int on_option
     (int optval, const char_t* optarg,
      const char_t* optname, int optind,
@@ -332,7 +352,7 @@ public:
         const char_t* chars = "";
         switch(longopt->val) {
         case XOS_CONSOLE_MAIN_HELP_OPTVAL_C:
-            chars = XOS_CONSOLE_MAIN_HELP_OPTUSE;
+            chars = this->usage_option_usage(optarg, longopt);
             break;
         default:
             chars = extends::option_usage(optarg, longopt);
@@ -341,9 +361,9 @@ public:
         return chars;
     }
     virtual const char_t* options(const struct option*& longopts) {
-        static const char_t* chars = XOS_CONSOLE_MAIN_OPTIONS_CHARS;
+        static const char_t* chars = NADIR_CONSOLE_MAIN_OPTIONS_CHARS;
         static struct option optstruct[]= {
-            XOS_CONSOLE_MAIN_OPTIONS_OPTIONS
+            NADIR_CONSOLE_MAIN_OPTIONS_OPTIONS
             {0, 0, 0, 0}};
         longopts = optstruct;
         return chars;
@@ -356,5 +376,3 @@ typedef main_optt<> main_opt;
 } /// namespace xos
 
 #endif /// _XOS_CONSOLE_GETOPT_MAIN_OPT_HPP 
-        
-
