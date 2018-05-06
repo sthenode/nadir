@@ -40,11 +40,14 @@ public:
     typedef typename implements::file_t file_t;
     typedef typename implements::null_file_t null_file_t;
     enum { null_file = implements::null_file};
+
     typedef typename implements::char_t char_t;
     typedef typename implements::end_char_t end_char_t;
     enum { end_char = implements::end_char };
 
 protected:
+    using implements::err;
+    using implements::err_flush;
     virtual ssize_t err(file_t f, const char_t* out, size_t size, size_t length) const {
         ssize_t count = 0;
         if ((out) && (size) && (length) && (f != ((file_t)null_file))) {
@@ -73,7 +76,10 @@ protected:
 typedef errort<> error_implements;
 class _EXPORT_CLASS error: virtual public error_implements {
 protected:
-    virtual ssize_t errfv(file_t f, const char_t* format, va_list va) {
+    typedef error_implements implements;
+    
+    using implements::errfv;
+    virtual ssize_t errfv(file_t f, const char_t* format, va_list va) const {
         ssize_t count = 0;
         if ((f != ((file_t)null_file)) && (format)) {
             count = ::vfprintf(f, format, va);
