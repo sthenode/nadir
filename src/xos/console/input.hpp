@@ -163,7 +163,6 @@ public:
         return count;
     }
 
-protected:
     using implements::infv;
     using implements::inln;
     using implements::in;
@@ -197,6 +196,7 @@ protected:
         return count;
     }
 
+protected:
     virtual file_t in_std_in() {
         return this->std_in();
     }

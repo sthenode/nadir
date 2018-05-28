@@ -13,49 +13,16 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: reader.hpp
+///   File: sequence.cpp
 ///
 /// Author: $author$
-///   Date: 5/2/2018
+///   Date: 5/19/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_IO_READER_HPP
-#define _XOS_IO_READER_HPP
-
 #include "xos/io/sequence.hpp"
 
 namespace xos {
 namespace io {
 
-///////////////////////////////////////////////////////////////////////
-///  Class: readert
-///////////////////////////////////////////////////////////////////////
-template 
-<class TImplements = sequence>
-
-class _EXPORT_CLASS readert: virtual public TImplements {
-public:
-    typedef TImplements implements;
-
-    typedef typename implements::what_t what_t;
-    typedef typename implements::sized_t sized_t;
-    typedef typename implements::endof_t endof_t;
-    static const endof_t endof = implements::endof;
-
-    virtual ssize_t read(what_t* what, size_t size) {
-        ssize_t count = 0;
-        return count;
-    }    
-};
-typedef readert<sequence> reader;
-
-typedef readert<char_sequence> char_reader;
-typedef readert<tchar_sequence> tchar_reader;
-typedef readert<wchar_sequence> wchar_reader;
-
-typedef readert<byte_sequence> byte_reader;
-typedef readert<word_sequence> word_reader;
-
 } /// namespace io
 } /// namespace xos
 
-#endif /// _XOS_IO_READER_HPP 

@@ -13,47 +13,47 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: stream.hpp
+///   File: sequence.hpp
 ///
 /// Author: $author$
-///   Date: 5/2/2018
+///   Date: 5/19/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_IO_STREAM_HPP
-#define _XOS_IO_STREAM_HPP
+#ifndef _XOS_IO_SEQUENCE_HPP
+#define _XOS_IO_SEQUENCE_HPP
 
-#include "xos/io/reader.hpp"
-#include "xos/io/writer.hpp"
+#include "xos/base/base.hpp"
 
 namespace xos {
 namespace io {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: streamt
+///  Class: sequencet
 ///////////////////////////////////////////////////////////////////////
 template 
-<class TReaderImplements = reader, class TWriterImplements = writer>
+<typename TWhat = char, typename TSized = TWhat,
+ typename TEndof = TSized, TEndof VEndof = 0,
+ class TImplements = implement_base>
 
-class _EXPORT_CLASS streamt
-: virtual public TReaderImplements, virtual public TWriterImplements {
+class _EXPORT_CLASS sequencet: virtual public TImplements {
 public:
-    typedef TWriterImplements implements;
-
-    typedef typename implements::what_t what_t;
-    typedef typename implements::sized_t sized_t;
-    typedef typename implements::endof_t endof_t;
-    static const endof_t endof = implements::endof;
-
+    typedef TImplements implements;
+    
+    typedef TWhat what_t;
+    typedef TSized sized_t;
+    typedef TEndof endof_t;
+    static const endof_t endof = VEndof;
+    
 };
-typedef streamt<reader, writer> stream;
+typedef sequencet<void, char> sequence;
 
-typedef streamt<char_reader, char_writer> char_stream;
-typedef streamt<tchar_reader, tchar_writer> tchar_stream;
-typedef streamt<wchar_reader, wchar_writer> wchar_stream;
+typedef sequencet<char, char> char_sequence;
+typedef sequencet<tchar_t, tchar_t> tchar_sequence;
+typedef sequencet<wchar_t, wchar_t> wchar_sequence;
 
-typedef streamt<byte_reader, byte_writer> byte_stream;
-typedef streamt<word_reader, word_writer> word_stream;
+typedef sequencet<byte_t, byte_t> byte_sequence;
+typedef sequencet<word_t, word_t> word_sequence;
 
 } /// namespace io
 } /// namespace xos
 
-#endif /// _XOS_IO_STREAM_HPP 
+#endif /// _XOS_IO_SEQUENCE_HPP 

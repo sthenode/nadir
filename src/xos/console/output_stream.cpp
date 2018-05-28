@@ -13,47 +13,24 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: stream.hpp
+///   File: output_stream.cpp
 ///
 /// Author: $author$
-///   Date: 5/2/2018
+///   Date: 5/21/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_IO_STREAM_HPP
-#define _XOS_IO_STREAM_HPP
-
-#include "xos/io/reader.hpp"
-#include "xos/io/writer.hpp"
+#include "xos/console/output_stream.hpp"
 
 namespace xos {
-namespace io {
+namespace console {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: streamt
+///  Class: output_stream_implementt
 ///////////////////////////////////////////////////////////////////////
-template 
-<class TReaderImplements = reader, class TWriterImplements = writer>
 
-class _EXPORT_CLASS streamt
-: virtual public TReaderImplements, virtual public TWriterImplements {
-public:
-    typedef TWriterImplements implements;
+///////////////////////////////////////////////////////////////////////
+///  Class: output_streamt
+///////////////////////////////////////////////////////////////////////
 
-    typedef typename implements::what_t what_t;
-    typedef typename implements::sized_t sized_t;
-    typedef typename implements::endof_t endof_t;
-    static const endof_t endof = implements::endof;
-
-};
-typedef streamt<reader, writer> stream;
-
-typedef streamt<char_reader, char_writer> char_stream;
-typedef streamt<tchar_reader, tchar_writer> tchar_stream;
-typedef streamt<wchar_reader, wchar_writer> wchar_stream;
-
-typedef streamt<byte_reader, byte_writer> byte_stream;
-typedef streamt<word_reader, word_writer> word_stream;
-
-} /// namespace io
+} /// namespace console
 } /// namespace xos
 
-#endif /// _XOS_IO_STREAM_HPP 

@@ -195,7 +195,6 @@ public:
         return count;
     }
 
-protected:
     using implements::outfv;
     using implements::outlv;
     using implements::outln;
@@ -234,6 +233,7 @@ protected:
         return count;
     }
 
+protected:
     virtual file_t out_std_out() {
         return this->std_out();
     }

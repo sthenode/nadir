@@ -13,49 +13,59 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: reader.hpp
+///   File: output_stream.hpp
 ///
 /// Author: $author$
-///   Date: 5/2/2018
+///   Date: 5/21/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_IO_READER_HPP
-#define _XOS_IO_READER_HPP
+#ifndef _XOS_CONSOLE_OUTPUT_STREAM_HPP
+#define _XOS_CONSOLE_OUTPUT_STREAM_HPP
 
-#include "xos/io/sequence.hpp"
+#include "xos/console/io.hpp"
+#include "xos/io/stream.hpp"
 
 namespace xos {
-namespace io {
+namespace console {
 
+typedef xos::console::io output_streamt_io;
+typedef xos::io::char_stream output_streamt_implements;
+typedef base output_streamt_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: readert
+///  Class: output_streamt
 ///////////////////////////////////////////////////////////////////////
 template 
-<class TImplements = sequence>
+<class TIo = output_streamt_io, 
+ class TImplements = output_streamt_implements, class TExtends = output_streamt_extends>
 
-class _EXPORT_CLASS readert: virtual public TImplements {
+class _EXPORT_CLASS output_streamt: virtual public TImplements, public TExtends {
 public:
     typedef TImplements implements;
+    typedef TExtends extends;
 
-    typedef typename implements::what_t what_t;
-    typedef typename implements::sized_t sized_t;
-    typedef typename implements::endof_t endof_t;
-    static const endof_t endof = implements::endof;
+    typedef TIo io_t;
+    typedef implements stream_t;
+    typedef typename stream_t::what_t what_t;
+    typedef typename stream_t::sized_t sized_t;
+    
+    output_streamt(const output_streamt &copy): io_(copy.io_) {
+    }
+    output_streamt(io_t& io): io_(io) {
+    }
+    virtual ~output_streamt() {
+    }
 
-    virtual ssize_t read(what_t* what, size_t size) {
+    virtual ssize_t write(const what_t* what, size_t size) {
         ssize_t count = 0;
+        count = io_.out((const sized_t*)what, size);
         return count;
     }    
+
+protected:
+    io_t& io_;
 };
-typedef readert<sequence> reader;
+typedef output_streamt<> output_stream;
 
-typedef readert<char_sequence> char_reader;
-typedef readert<tchar_sequence> tchar_reader;
-typedef readert<wchar_sequence> wchar_reader;
-
-typedef readert<byte_sequence> byte_reader;
-typedef readert<word_sequence> word_reader;
-
-} /// namespace io
+} /// namespace console
 } /// namespace xos
 
-#endif /// _XOS_IO_READER_HPP 
+#endif /// _XOS_CONSOLE_OUTPUT_STREAM_HPP 
