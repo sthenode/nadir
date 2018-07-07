@@ -276,6 +276,13 @@ protected:
     
     virtual int get_arguments(int argc, char_t** argv, char_t** env) {
         int err = 0;
+        if (argc > (optind)) {
+            for (int argind = optind; argind < argc; ++argind) {
+                if ((err = this->on_argument(argv[argind], argind-optind, argc, argv, env))) {
+                    break;
+                }
+            }
+        }
         return err;
     }
     virtual int before_get_arguments(int argc, char_t** argv, char_t** env) {
@@ -291,6 +298,11 @@ protected:
     }
     virtual int after_get_arguments(int argc, char_t** argv, char_t** env) {
         int err = 0;
+        return err;
+    }
+    virtual int missing_argument(const char_t* arg) {
+        int err = 1;
+        this->errl("missing argument \"", arg, "\"", NULL);
         return err;
     }
 };
