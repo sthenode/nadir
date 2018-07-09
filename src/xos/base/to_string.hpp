@@ -165,7 +165,10 @@ template
 class _EXPORT_CLASS pointer_to_stringt: public TExtends {
 public:
     typedef TExtends extends;
-    pointer_to_stringt(pointer_t to) {
+    pointer_to_stringt(const pointer_t& to) {
+        this->append_pointer(to);
+    }
+    pointer_to_stringt(const const_pointer_t& to) {
         this->append_pointer(to);
     }
 };

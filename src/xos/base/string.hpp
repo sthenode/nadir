@@ -292,6 +292,10 @@ public:
         return x;
     }
 
+    virtual char_stringt& assign_pointer(const const_pointer_t& c) {
+        this->clear();
+        return append_pointer(c);
+    }
     virtual char_stringt& assign_pointer(const pointer_t& c) {
         this->clear();
         return append_pointer(c);
@@ -321,6 +325,11 @@ public:
         return append_double(c);
     }
 
+    virtual char_stringt& append_pointer(const const_pointer_t& c) {
+        sstream_t ss; ss << c;
+        extends::append(ss.str());
+        return *this;
+    }
     virtual char_stringt& append_pointer(const pointer_t& c) {
         sstream_t ss; ss << c;
         extends::append(ss.str());
