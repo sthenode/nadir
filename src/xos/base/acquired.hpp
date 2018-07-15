@@ -153,6 +153,12 @@ public:
     typedef TImplements implements;
     typedef TExtends extends;
 
+    acquiret(acquired& _acquired, mseconds_t time): acquired_(_acquired) {
+        if (acquire_success != (acquired_.timed_acquire(time))) {
+            acquire_exception e(acquire_failed);
+            throw (e);
+        }
+    }
     acquiret(acquired& _acquired): acquired_(_acquired) {
         if (!(acquired_.acquire())) {
             acquire_exception e(acquire_failed);

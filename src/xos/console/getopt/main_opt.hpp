@@ -305,6 +305,10 @@ protected:
         this->errl("missing argument \"", arg, "\"", NULL);
         return err;
     }
+    virtual const char_t* arguments(const char_t**& args) {
+        args = 0;
+        return 0;
+    }
 };
 typedef main_opt_baset<> main_opt_base;
 
@@ -379,6 +383,10 @@ public:
             {0, 0, 0, 0}};
         longopts = optstruct;
         return chars;
+    }
+    virtual const char_t* arguments(const char_t**& args) {
+        args = 0;
+        return 0;
     }
 };
 typedef main_optt<> main_opt;

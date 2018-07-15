@@ -172,7 +172,7 @@ protected:
         int err = 1;
         return err;
     }
-    virtual const char_t* arguments(const char_t**& args) const {
+    virtual const char_t* arguments(const char_t**& args) {
         args = 0;
         return 0;
     }
