@@ -164,6 +164,13 @@ public:
         return size_;
     }
 
+    virtual TWhat* has_elements(size_t& size, size_t& length) const {
+        size = size_;
+        if (0 < (length = length_)) {
+            return elements_;
+        }
+        return 0;
+    }
     virtual TWhat* has_elements(size_t& length) const {
         if (0 < (length = length_)) {
             return elements_;
@@ -175,6 +182,15 @@ public:
             return elements_;
         }
         return 0;
+    }
+    virtual TWhat* elements(size_t& size, size_t& length) const {
+        size = size_;
+        length = length_;
+        return elements_;
+    }
+    virtual TWhat* elements(size_t& length) const {
+        length = length_;
+        return elements_;
     }
     virtual TWhat* elements() const {
         return elements_;
