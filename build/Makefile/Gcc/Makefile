@@ -88,6 +88,7 @@ ${build_rostra_USRINCLUDES} \
 #
 build_nadir_USRCXXFLAGS += \
 ${build_rostra_USRCXXFLAGS} \
+-std=c++11 \
 
 
 # build nadir USRLIBDIRS

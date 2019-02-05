@@ -18,39 +18,39 @@
 # Author: $author$
 #   Date: 7/23/2018
 #
-# generic Gcc Makefile for nadir Library extname
+# generic Gcc Makefile for nadir Library libnadir
 ########################################################################
 
 
 #
 # target
 #
-extname_LIBTARGET = extname.${LIBEXT}
+libnadir_LIBTARGET = libnadir.${LIBEXT}
 
 ########################################################################
 
 #
 # user c++ flags
 #
-extname_USRCXXFLAGS += \
+libnadir_USRCXXFLAGS += \
 ${nadir_USRCXXFLAGS} \
 
 #
 # user defines
 #
-extname_USRDEFINES += \
+libnadir_USRDEFINES += \
 ${nadir_USRDEFINES} \
 
 #
 # user includes
 #
-extname_USRINCLUDES += \
+libnadir_USRINCLUDES += \
 ${nadir_USRINCLUDES} \
 
 #
 # user libdirs
 #
-extname_USRLIBDIRS += \
+libnadir_USRLIBDIRS += \
 ${nadir_USRLIBDIRS} \
 
 ########################################################################
@@ -58,37 +58,48 @@ ${nadir_USRLIBDIRS} \
 #
 # Library .c sources
 #
-#extname_LIB_C_SOURCES += \
+#libnadir_LIB_C_SOURCES += \
 #${NADIR_SRC}/nadir/base/Base.c \
 
 #
 # Library .cc sources
 #
-#extname_LIB_CC_SOURCES += \
+#libnadir_LIB_CC_SOURCES += \
 #${NADIR_SRC}/nadir/base/Base.cc \
 
 #
 # Library .cxx sources
 #
-#extname_LIB_CXX_SOURCES += \
+#libnadir_LIB_CXX_SOURCES += \
 #${NADIR_SRC}/nadir/base/Base.cxx \
 
 #
 # Library .cpp sources
 #
-#extname_LIB_CPP_SOURCES += \
-#${NADIR_SRC}/nadir/base/Base.cpp \
+libnadir_LIB_CPP_SOURCES += \
+${NADIR_SRC}/xos/base/base.cpp \
+${NADIR_SRC}/xos/base/to_char.cpp \
+${NADIR_SRC}/xos/base/chars.cpp \
+${NADIR_SRC}/xos/base/array.cpp \
+${NADIR_SRC}/xos/base/string_base.cpp \
+${NADIR_SRC}/xos/base/string.cpp \
+${NADIR_SRC}/xos/base/to_string.cpp \
+${NADIR_SRC}/xos/base/exception.cpp \
+${NADIR_SRC}/xos/base/attached.cpp \
+${NADIR_SRC}/xos/base/created.cpp \
+${NADIR_SRC}/xos/base/opened.cpp \
+${NADIR_SRC}/xos/lib/nadir/version.cpp \
 
 #
 # Library .m sources
 #
-#extname_LIB_M_SOURCES += \
+#libnadir_LIB_M_SOURCES += \
 #${NADIR_SRC}/nadir/base/Base.m \
 
 #
 # Library .mm sources
 #
-#extname_LIB_MM_SOURCES += \
+#libnadir_LIB_MM_SOURCES += \
 #${NADIR_SRC}/nadir/base/Base.mm \
 
 

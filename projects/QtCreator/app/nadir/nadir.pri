@@ -67,6 +67,7 @@ $${NADIR_SRC}/xos/console/main.hpp \
 $${NADIR_SRC}/xos/console/main_main.hpp \
 $${NADIR_SRC}/xos/console/getopt/main_opt.hpp \
 $${NADIR_SRC}/xos/console/getopt/main.hpp \
+$${NADIR_SRC}/xos/console/lib/version/main.hpp \
 $${NADIR_SRC}/xos/app/console/nadir/main.hpp \
 
 # nadir_exe SOURCES
@@ -78,7 +79,6 @@ $${NADIR_SRC}/xos/console/std/output.cpp \
 $${NADIR_SRC}/xos/console/std/error.cpp \
 $${NADIR_SRC}/xos/console/std/input.cpp \
 $${NADIR_SRC}/xos/console/std/io.cpp \
-$${NADIR_SRC}/xos/console/main_main.cpp \
 $${NADIR_SRC}/xos/console/getopt/main_opt.cpp \
 $${NADIR_SRC}/xos/app/console/nadir/main.cpp \
 

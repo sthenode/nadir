@@ -18,7 +18,7 @@
 # Author: $author$
 #   Date: 7/23/2018
 #
-# Os Gcc Makefile for nadir Library extname
+# Os Gcc Makefile for nadir Library libnadir
 ########################################################################
 
 PKG = ../../../../../..
@@ -32,12 +32,12 @@ include $(PKG)/$(BMK)/Makedefines
 include $(PKG)/$(MAK)/Makedefines
 include $(PKG)/$(MAK)/Makefile
 include $(PKG)/$(BMK)/Makefile
-include $(PKG)/$(MAK)/lib/extname/Makefile
+include $(PKG)/$(MAK)/lib/libnadir/Makefile
 
 #
 # target
 #
-LIBTARGET = ${extname_LIBTARGET}
+LIBTARGET = ${libnadir_LIBTARGET}
 
 ########################################################################
 
@@ -45,37 +45,37 @@ LIBTARGET = ${extname_LIBTARGET}
 # user defines
 #
 USRDEFINES += \
-${extname_USRDEFINES}
+${libnadir_USRDEFINES}
 
 #
 # user includes
 #
 USRINCLUDES += \
-${extname_USRINCLUDES}
+${libnadir_USRINCLUDES}
 
 #
 # user libdirs
 #
 USRLIBDIRS += \
-${extname_USRLIBDIRS}
+${libnadir_USRLIBDIRS}
 
 #
 # user c++ flags
 #
 USRCXXFLAGS += \
-${extname_USRCXXFLAGS}
+${libnadir_USRCXXFLAGS}
 
 #
 # user c flags
 #
 USRCFLAGS += \
-${extname_USRCFLAGS}
+${libnadir_USRCFLAGS}
 
 #
 # user ld flags
 #
 USRLDFLAGS += \
-${extname_USRLDFLAGS}
+${libnadir_USRLDFLAGS}
 
 ########################################################################
 
@@ -83,37 +83,37 @@ ${extname_USRLDFLAGS}
 # Library C sources
 #
 LIB_C_SOURCES += \
-${extname_LIB_C_SOURCES}
+${libnadir_LIB_C_SOURCES}
 
 #
 # Library C++ .cc sources
 #
 LIB_CC_SOURCES += \
-${extname_LIB_CC_SOURCES}
+${libnadir_LIB_CC_SOURCES}
 
 #
 # Library C++ .cxx sources
 #
 LIB_CXX_SOURCES += \
-${extname_LIB_CXX_SOURCES}
+${libnadir_LIB_CXX_SOURCES}
 
 #
 # Library C++ .cpp sources
 #
 LIB_CPP_SOURCES += \
-${extname_LIB_CPP_SOURCES}
+${libnadir_LIB_CPP_SOURCES}
 
 #
 # Library Objective C .m sources
 #
 LIB_M_SOURCES += \
-${extname_LIB_M_SOURCES}
+${libnadir_LIB_M_SOURCES}
 
 #
 # Library Objective C++ .mm sources
 #
 LIB_MM_SOURCES += \
-${extname_LIB_MM_SOURCES}
+${libnadir_LIB_MM_SOURCES}
 
 ########################################################################
 

@@ -46,7 +46,7 @@ $${nadir_exe_OBJECTIVE_HEADERS} \
 
 # OBJECTIVE_SOURCES
 #
-SOURCES += \
+OBJECTIVE_SOURCES += \
 $${nadir_exe_OBJECTIVE_SOURCES} \
 
 ########################################################################
@@ -54,12 +54,12 @@ $${nadir_exe_OBJECTIVE_SOURCES} \
 #
 HEADERS += \
 $${nadir_exe_HEADERS} \
+$${OBJECTIVE_HEADERS} \
 
 # SOURCES
 #
 SOURCES += \
 $${nadir_exe_SOURCES} \
-$${OBJECTIVE_SOURCES} \
 
 ########################################################################
 # FRAMEWORKS

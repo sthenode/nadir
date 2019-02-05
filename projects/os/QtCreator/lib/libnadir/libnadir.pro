@@ -48,7 +48,7 @@ $${libnadir_OBJECTIVE_HEADERS} \
 
 # OBJECTIVE_SOURCES
 #
-SOURCES += \
+OBJECTIVE_SOURCES += \
 $${libnadir_OBJECTIVE_SOURCES} \
 
 ########################################################################
@@ -56,12 +56,12 @@ $${libnadir_OBJECTIVE_SOURCES} \
 #
 HEADERS += \
 $${libnadir_HEADERS} \
+$${OBJECTIVE_HEADERS} \
 
 # SOURCES
 #
 SOURCES += \
 $${libnadir_SOURCES} \
-$${OBJECTIVE_SOURCES} \
 
 ########################################################################
 
