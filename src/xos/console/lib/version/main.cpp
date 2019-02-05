@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2018 $organization$
+/// Copyright (c) 1988-2019 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -16,22 +16,21 @@
 ///   File: main.cpp
 ///
 /// Author: $author$
-///   Date: 4/4/2018
+///   Date: 1/31/2019
 ///////////////////////////////////////////////////////////////////////
-#include "xos/app/console/nadir/main.hpp"
-#include "xos/console/main_main.cpp"
+#include "xos/console/lib/version/main.hpp"
 
 namespace xos {
-namespace app {
 namespace console {
-namespace nadir {
+namespace lib {
+namespace version {
 
-static main the_main;
+///////////////////////////////////////////////////////////////////////
+///  Class: maint
+///////////////////////////////////////////////////////////////////////
 
-} /// namespace nadir
+} /// namespace version
+} /// namespace lib
 } /// namespace console
-} /// namespace app
 } /// namespace xos
-
-        
 

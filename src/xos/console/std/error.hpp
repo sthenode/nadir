@@ -69,7 +69,7 @@ protected:
         return count;
     }
     virtual file_t std_err() const {
-        return ::stderr;
+        return stderr;
     }
 };
 

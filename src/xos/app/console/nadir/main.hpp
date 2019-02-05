@@ -21,7 +21,7 @@
 #ifndef _XOS_APP_CONSOLE_NADIR_MAIN_HPP
 #define _XOS_APP_CONSOLE_NADIR_MAIN_HPP
 
-#include "xos/console/getopt/main.hpp"
+#include "xos/console/lib/version/main.hpp"
 #include "xos/lib/nadir/version.hpp"
 
 namespace xos {
@@ -29,43 +29,7 @@ namespace app {
 namespace console {
 namespace nadir {
 
-typedef xos::console::getopt::main::implements maint_implements;
-typedef xos::console::getopt::main maint_extends;
-///////////////////////////////////////////////////////////////////////
-///  Class: maint
-///////////////////////////////////////////////////////////////////////
-template <class TImplements = maint_implements, class TExtends = maint_extends>
-class _EXPORT_CLASS maint: virtual public TImplements, public TExtends {
-public:
-    typedef TImplements implements;
-    typedef TExtends extends;
-
-    typedef typename implements::string_t string_t;
-    typedef typename implements::file_t file_t;
-    typedef typename implements::null_file_t null_file_t;
-    enum { null_file = implements::null_file};
-    typedef typename implements::char_t char_t;
-    typedef typename implements::end_char_t end_char_t;
-    enum { end_char = implements::end_char };
-
-    maint() {
-    }
-    virtual ~maint() {
-    }
-private:
-    maint(const maint &copy) {
-    }
-    
-protected:
-    virtual int run(int argc, char_t** argv, char_t** env) {
-        int err = 0;
-        const lib::version& which_version = lib::nadir::version::which();
-        const string_t version = which_version.to_string();
-        this->outlln("library version = ", version.chars(), NULL);
-        return err;
-    }
-};
-typedef maint<> main;
+typedef xos::console::lib::version::maint<xos::lib::nadir::version> main;
 
 } /// namespace nadir
 } /// namespace console

@@ -66,7 +66,7 @@ protected:
         return count;
     }
     virtual file_t std_in() const {
-        return ::stdin;
+        return stdin;
     }
 };
 

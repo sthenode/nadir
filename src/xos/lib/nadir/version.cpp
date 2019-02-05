@@ -21,7 +21,7 @@
 #include "xos/lib/nadir/version.hpp"
 
 #if !defined(XOS_LIB_NADIR_VERSION_NAME)
-#define XOS_LIB_NADIR_VERSION_NAME "nadir"
+#define XOS_LIB_NADIR_VERSION_NAME "libnadir"
 #endif /// !defined(XOS_LIB_NADIR_VERSION_NAME)
 
 #if !defined(XOS_LIB_NADIR_VERSION_MAJOR)
@@ -63,7 +63,7 @@ public:
     virtual unsigned release() const {
         return XOS_LIB_NADIR_VERSION_RELEASE;
     }
-};
+}; /// class _EXPORT_CLASS version
 
 } /// namespace which
 

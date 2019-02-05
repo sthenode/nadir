@@ -41,7 +41,7 @@ enum {
     unlock_interrupted,
     unlock_invalid
 };
-template <class TString = char_string>
+template <class TString>
 inline const TString lock_status_to_string(lock_status status) {
     switch (status) {
     case lock_success: return TString("lock_success");
@@ -82,7 +82,7 @@ public:
     }
 
     virtual string_t status_to_string() const {
-        return lock_status_to_string(this->status());
+        return lock_status_to_string<string_t>(this->status());
     }
 };
 typedef lock_exceptiont<> lock_exception;

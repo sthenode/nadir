@@ -69,7 +69,7 @@ protected:
         return count;
     }
     virtual file_t std_out() const {
-        return ::stdout;
+        return stdout;
     }
 };
 

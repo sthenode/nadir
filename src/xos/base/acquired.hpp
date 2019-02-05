@@ -41,7 +41,7 @@ enum {
     release_interrupted,
     release_invalid
 };
-template <class TString = char_string>
+template <class TString>
 inline const TString acquire_status_to_string(acquire_status status) {
     switch (status) {
     case acquire_success: return TString("acquire_success");
