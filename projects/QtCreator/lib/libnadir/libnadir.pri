@@ -66,6 +66,7 @@ $${NADIR_SRC}/xos/base/exception.hpp \
 $${NADIR_SRC}/xos/base/attached.hpp \
 $${NADIR_SRC}/xos/base/created.hpp \
 $${NADIR_SRC}/xos/base/opened.hpp \
+\
 $${NADIR_SRC}/xos/logger/level.hpp \
 $${NADIR_SRC}/xos/logger/function.hpp \
 $${NADIR_SRC}/xos/logger/location.hpp \
@@ -73,6 +74,13 @@ $${NADIR_SRC}/xos/logger/format.hpp \
 $${NADIR_SRC}/xos/logger/message.hpp \
 $${NADIR_SRC}/xos/logger/output.hpp \
 $${NADIR_SRC}/xos/logger/interface.hpp \
+\
+$${NADIR_SRC}/xos/io/sequence.hpp \
+$${NADIR_SRC}/xos/io/seeker.hpp \
+$${NADIR_SRC}/xos/io/reader.hpp \
+$${NADIR_SRC}/xos/io/array/reader.hpp \
+$${NADIR_SRC}/xos/io/string/reader.hpp \
+$${NADIR_SRC}/xos/io/told.hpp \
 $${NADIR_SRC}/xos/io/logger.hpp \
 $${NADIR_SRC}/xos/lib/version.hpp \
 $${NADIR_SRC}/xos/lib/nadir/version.hpp \
@@ -91,6 +99,12 @@ $${NADIR_SRC}/xos/base/exception.cpp \
 $${NADIR_SRC}/xos/base/attached.cpp \
 $${NADIR_SRC}/xos/base/created.cpp \
 $${NADIR_SRC}/xos/base/opened.cpp \
+\
+$${NADIR_SRC}/xos/io/sequence.cpp \
+$${NADIR_SRC}/xos/io/seeker.cpp \
+$${NADIR_SRC}/xos/io/array/reader.cpp \
+$${NADIR_SRC}/xos/io/told.cpp \
+\
 $${NADIR_SRC}/xos/lib/nadir/version.cpp \
 
 ########################################################################
