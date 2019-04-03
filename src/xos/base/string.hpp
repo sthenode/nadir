@@ -29,34 +29,163 @@
 
 namespace xos {
 
-typedef implement_base char_string_implementt_implements;
+typedef implement_base string_implementt_implements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: char_string_implementt
+///  Class: string_implementt
 ///////////////////////////////////////////////////////////////////////
 template 
 <typename TChar = char,
  typename TEnd = TChar, TEnd VEnd = 0,
- class TImplements = char_string_implementt_implements>
-class _EXPORT_CLASS char_string_implementt: virtual public TImplements {
+ class TImplements = string_implementt_implements>
+class _EXPORT_CLASS string_implementt: virtual public TImplements {
 public:
     typedef TImplements implements;
 };
-typedef char_string_implementt<> char_string_implement;
+typedef string_implementt<> string_implement;
 
-typedef char_string_implement char_stringt_implements;
+typedef string_implement stringt_implements;
+///////////////////////////////////////////////////////////////////////
+///  Class: stringt
+///////////////////////////////////////////////////////////////////////
+template 
+<typename TChar = char,
+ typename TEnd = TChar, TEnd VEnd = 0,
+ class TImplement = string_implementt<TChar, TEnd, VEnd>,
+ class TChars = charst<TChar, TEnd, VEnd, TImplement>,
+ class TSStream = ::std::basic_stringstream<TChar>,
+ class TString = ::std::basic_string<TChar>,
+ class TImplements = TChars, class TExtends = TString>
+
+class _EXPORT_CLASS stringt: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements implements;
+    typedef TExtends extends;
+
+    typedef TChars chars_t;
+    typedef TSStream sstream_t;
+    typedef TString string_t;
+    typedef TChar char_t;
+    typedef TEnd end_t;
+    static const end_t endof = VEnd;
+
+    stringt(const char_t* chars, size_t length) {
+        this->append(chars, length);
+    }
+    stringt(const char_t* chars) {
+        this->append(chars);
+    }
+    stringt(const stringt &copy): extends(copy) {
+    }
+    stringt() {
+    }
+    virtual ~stringt() {
+    }
+
+    virtual stringt& assign(const stringt& s) {
+        this->clear();
+        return append(s);
+    }
+    virtual stringt& assign(const char_t& c) {
+        this->clear();
+        return append(c);
+    }
+    virtual stringt& assign(const char_t* chars) {
+        this->clear();
+        return append(chars);
+    }
+    virtual stringt& assign(const char_t* chars, size_t length) {
+        this->clear();
+        return append(chars, length);
+    }
+    virtual stringt& assignl(const char_t* chars, ...) {
+        va_list va; va_start(va, chars);
+        assignv(chars, va);
+        va_end(va);
+        return *this;
+    }
+    virtual stringt& assignv(const char_t* chars, va_list va) {
+        this->clear();
+        return appendv(chars, va);
+    }
+
+    virtual stringt& append(const stringt& s) {
+        return append(s.chars());
+    }
+    virtual stringt& append(const char_t& c) {
+        return append(&c, 1);
+    }
+    virtual stringt& append(const char_t* chars) {
+        if ((chars) && (*chars)) {
+            extends::append(chars);
+        }
+        return *this;
+    }
+    virtual stringt& append(const char_t* chars, size_t length) {
+        if ((chars) && (length)) {
+            extends::append(chars, length);
+        }
+        return *this;
+    }
+    virtual stringt& appendl(const char_t* chars, ...) {
+        va_list va; va_start(va, chars);
+        appendv(chars, va);
+        va_end(va);
+        return *this;
+    }
+    virtual stringt& appendv(const char_t* chars, va_list va) {
+        if ((chars)) {
+            do { append(chars);
+            } while ((chars = va_arg(va, const char_t*)));
+        }
+        return *this;
+    }
+
+    virtual stringt& operator << (const char_t& c) {
+        append(&c, 1);
+        return *this;
+    }
+    virtual stringt& operator << (const char_t* chars) {
+        append(chars);
+        return *this;
+    }
+
+    virtual const char_t* has_chars(size_t& length) const {
+        length = this->length();
+        return has_chars();
+    }
+    virtual const char_t* has_chars() const {
+        if ((this->length())) {
+            return this->c_str();
+        }
+        return 0;
+    }
+    virtual const char_t* chars(size_t& length) const {
+        length = this->length();
+        return chars();
+    }
+    virtual const char_t* chars() const {
+        return this->c_str();
+    }
+}; /// class _EXPORT_CLASS stringt
+
+typedef stringt<byte_t> byte_string;
+typedef stringt<word_t> word_string;
+
+typedef string_implement char_stringt_implements;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: char_stringt
 ///////////////////////////////////////////////////////////////////////
 template 
 <typename TChar = char,
  typename TEnd = TChar, TEnd VEnd = 0,
- class TImplement = char_string_implementt<TChar, TEnd, VEnd>,
+ class TImplement = string_implementt<TChar, TEnd, VEnd>,
  class TChars = charst<TChar, TEnd, VEnd, TImplement>,
  class TCharTo = to_chart<TChar, char>,
  class TWCharTo = to_chart<TChar, wchar_t>,
  class TSStream = ::std::basic_stringstream<TChar>,
  class TString = ::std::basic_string<TChar>,
  class TImplements = TChars, class TExtends = TString>
+
 class _EXPORT_CLASS char_stringt: virtual public TImplements, public TExtends {
 public:
     typedef TImplements implements;
@@ -451,11 +580,11 @@ public:
         return unequal;
     }
 };
+typedef char_stringt<char> string;
+
 typedef char_stringt<char> char_string;
 typedef char_stringt<tchar_t> tchar_string;
 typedef char_stringt<wchar_t> wchar_string;
-typedef char_stringt<byte_t> byte_string;
-typedef char_stringt<word_t> word_string;
 
 } /// namespace xos
 

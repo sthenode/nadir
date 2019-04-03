@@ -410,6 +410,8 @@ public:
         return *this;
     }
 };
+typedef char_arrayt<char> array;
+
 typedef char_arrayt<char> char_array;
 typedef char_arrayt<tchar_t> tchar_array;
 typedef char_arrayt<wchar_t> wchar_array;

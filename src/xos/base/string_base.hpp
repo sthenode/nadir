@@ -283,9 +283,13 @@ protected:
     char_t* write_buffer_;
     char_t default_buffer_[default_size];
 };
-typedef string_baset<char> string_base;
-typedef string_baset<wchar_t> wstring_base;
-typedef string_baset<tchar_t> tstring_base;
+
+typedef string_baset<char> string_base, char_string_base;
+typedef string_baset<tchar_t> tstring_base, tchar_string_base;
+typedef string_baset<wchar_t> wstring_base, wchar_string_base;
+
+typedef string_baset<byte_t> byte_string_base;
+typedef string_baset<word_t> word_string_base;
 
 } /// namespace xos
 

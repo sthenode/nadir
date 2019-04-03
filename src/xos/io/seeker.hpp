@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2018 $organization$
+/// Copyright (c) 1988-2019 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,26 +13,35 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: reader.hpp
+///   File: seeker.hpp
 ///
 /// Author: $author$
-///   Date: 5/2/2018
+///   Date: 3/31/2019
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_IO_READER_HPP
-#define _XOS_IO_READER_HPP
+#ifndef _XOS_IO_SEEKER_HPP
+#define _XOS_IO_SEEKER_HPP
 
-#include "xos/io/seeker.hpp"
+#include "xos/io/sequence.hpp"
 
 namespace xos {
 namespace io {
 
-typedef seeker readert_implements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: readert
+///  Enum: from_t
 ///////////////////////////////////////////////////////////////////////
-template <class TImplements = readert_implements>
+typedef int from_t;
+enum {
+    from_begining,
+    from_end,
+    from_current
+};
 
-class _EXPORT_CLASS readert: virtual public TImplements {
+typedef sequence seekert_implements;
+///////////////////////////////////////////////////////////////////////
+///  Class: seekert
+///////////////////////////////////////////////////////////////////////
+template <class TImplements = seekert_implements>
+class _EXPORT_CLASS seekert: virtual public TImplements {
 public:
     typedef TImplements implements;
 
@@ -41,21 +50,27 @@ public:
     typedef typename implements::endof_t endof_t;
     static const endof_t endof = implements::endof;
 
-    virtual ssize_t read(what_t* what, size_t size) {
-        ssize_t count = 0;
-        return count;
-    }    
-};
-typedef readert<seeker> reader;
+    virtual ssize_t reset() {
+        return 0;
+    }
+    virtual ssize_t seek(size_t to, int whence) {
+        return 0;
+    }
+    virtual ssize_t tell() const {
+        return 0;
+    }
+}; /// class _EXPORT_CLASS seekert
 
-typedef readert<char_seeker> char_reader;
-typedef readert<tchar_seeker> tchar_reader;
-typedef readert<wchar_seeker> wchar_reader;
+typedef seekert<sequence> seeker;
 
-typedef readert<byte_seeker> byte_reader;
-typedef readert<word_seeker> word_reader;
+typedef seekert<char_sequence> char_seeker;
+typedef seekert<tchar_sequence> tchar_seeker;
+typedef seekert<wchar_sequence> wchar_seeker;
+
+typedef seekert<byte_sequence> byte_seeker;
+typedef seekert<word_sequence> word_seeker;
 
 } /// namespace io
 } /// namespace xos
 
-#endif /// _XOS_IO_READER_HPP 
+#endif /// _XOS_IO_SEEKER_HPP 
