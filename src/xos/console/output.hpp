@@ -49,6 +49,42 @@ public:
     enum { end_char = VEndChar };
 
 protected:
+    virtual ssize_t outxln
+    (file_t f, const void* out, size_t length, bool upper_case = false) const {
+        ssize_t count = 0, amount = 0;
+        if (0 <= (amount = this->outx(f, out, length, upper_case))) {
+            count += amount;
+            if (0 <= (amount = this->outln(f))) {
+                count += amount;
+            }
+        }
+        return count;
+    }
+    virtual ssize_t outx
+    (file_t f, const void* out, size_t length, bool upper_case = false) const {
+        ssize_t count = 0;
+        const uint8_t* bytes;
+
+        if ((bytes = (const uint8_t*)(out)) && (length)) {
+            ssize_t amount = 0;
+            uint8_t b = 0;
+            char_t x[2];
+
+            for (; 0 < length; --length) {
+                b = (*bytes++);
+                x[0] = dtox(b >> 4, upper_case);
+                x[1] = dtox(b & 15, upper_case);
+
+                if (0 < (amount = this->out(f, x, 2))) {
+                    count += amount;
+                } else {
+                    return amount;
+                }
+            }
+        }
+        return count;
+    }
+
     virtual ssize_t outlv(file_t f, const char_t* out, va_list va) const {
         ssize_t count = 0;
         ssize_t amount = 0;
@@ -131,6 +167,29 @@ protected:
         }
         return count;
     }
+
+    virtual char_t dtox(uint8_t d, bool upper_case = false) const {
+        char a = (upper_case)?('A'):('a');
+        char_t x = (char_t)(0);
+        if ((0 <= d) && (9 >= d))
+            x = (char_t)(('0') +  d);
+        else
+        if ((10 <= d) && (15 >= d))
+            x = (char_t)((a) + (d - 10));
+        return x;
+    }
+    virtual int8_t xtod(const char_t& x) const {
+        int8_t d = -1;
+        if (((char_t)('A') <= x) && ((char_t)('F') >= x))
+            d = ((x - (char_t)('A')) + 10);
+        else
+        if (((char_t)('a') <= x) && ((char_t)('f') >= x))
+            d = ((x - (char_t)('a')) + 10);
+        else
+        if (((char_t)('0') <= x) && ((char_t)('9') >= x))
+            d = ((x - (char_t)('0')));
+        return d;
+    }
 };
 typedef output_baset<> output_base;
 
@@ -192,6 +251,17 @@ public:
                 count = amount;
             }
         }
+        return count;
+    }
+
+    using implements::outxln;
+    using implements::outx;
+    virtual ssize_t outxln(const void* out, size_t length, bool upper_case = false) {
+        ssize_t count = this->outxln(this->out_std_out(), out, length, upper_case);
+        return count;
+    }
+    virtual ssize_t outx(const void* out, size_t length, bool upper_case = false) {
+        ssize_t count = this->outx(this->out_std_out(), out, length, upper_case);
         return count;
     }
 

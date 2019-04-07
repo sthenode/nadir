@@ -176,6 +176,24 @@ typedef pointer_to_stringt<char> pointer_to_string;
 typedef pointer_to_stringt<tchar_t> pointer_to_tstring;
 typedef pointer_to_stringt<wchar_t> pointer_to_wstring;
 
+///////////////////////////////////////////////////////////////////////
+///  Class: x_to_stringt
+///////////////////////////////////////////////////////////////////////
+template <typename TChar = char, class TExtends = char_stringt<TChar> >
+class _EXPORT_CLASS x_to_stringt: public TExtends {
+public:
+    typedef TExtends extends;
+    x_to_stringt(const x_to_stringt &copy): extends(copy) {
+    }
+    x_to_stringt(const void* data, size_t length) {
+        this->appendx(data, length);
+    }
+}; /// class _EXPORT_CLASS x_to_stringt
+
+typedef x_to_stringt<char> x_to_string;
+typedef x_to_stringt<tchar_t> x_to_tstring;
+typedef x_to_stringt<wchar_t> x_to_wstring;
+
 } /// namespace xos
 
 #endif /// _XOS_BASE_TO_STRING_HPP 

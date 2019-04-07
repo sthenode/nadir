@@ -62,6 +62,11 @@ public:
 protected:
     virtual int run(int argc, char_t** argv, char_t** env) {
         int err = 0;
+        err = this->version_run(argc, argv, env);
+        return err;
+    }
+    virtual int version_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
         const xos::lib::version& which_version = lib_version_t::which();
         const string_t version = which_version.to_string();
         const char_t* name = which_version.name();
