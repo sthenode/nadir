@@ -83,7 +83,6 @@ ${NADIR_SRC}/xos/console/std/output.cpp \
 ${NADIR_SRC}/xos/console/std/error.cpp \
 ${NADIR_SRC}/xos/console/std/input.cpp \
 ${NADIR_SRC}/xos/console/std/io.cpp \
-${NADIR_SRC}/xos/console/main_main.cpp \
 ${NADIR_SRC}/xos/console/getopt/main_opt.cpp \
 ${NADIR_SRC}/xos/app/console/nadir/main.cpp \
 

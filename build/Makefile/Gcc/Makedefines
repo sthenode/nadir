@@ -25,7 +25,11 @@
 # build HOME
 #
 ifndef BUILD_HOME
-BUILD_HOME = $(HOME)/build/sthenode
+ifdef PKG
+BUILD_HOME = $(PKG)/..
+else
+BUILD_HOME = $(HOME)
+endif
 endif
 
 #
@@ -52,4 +56,3 @@ endif
 ifndef INS
 INS = $(BUILD_HOME)/build/nadir
 endif
-
