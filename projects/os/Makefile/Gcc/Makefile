@@ -38,5 +38,7 @@ include $(PKG)/$(MAK)/Makedefines
 SRC_DIRS = \
 $(PKG)/$(PRJ)/lib/libnadir \
 $(PKG)/$(PRJ)/app/nadir \
+$(PKG)/$(PRJ)/app/extname \
+$(PKG)/$(PRJ)/app/pathname \
 
 include $(PKG)/$(MAK)/Makedirs
