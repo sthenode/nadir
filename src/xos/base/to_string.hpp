@@ -120,6 +120,42 @@ typedef int_to_stringt<tchar_t> int_to_tstring;
 typedef int_to_stringt<wchar_t> int_to_wstring;
 
 ///////////////////////////////////////////////////////////////////////
+///  Class: float_to_stringt
+///////////////////////////////////////////////////////////////////////
+template
+<typename TChar = char,
+ class TExtends = char_stringt<TChar> >
+
+class _EXPORT_CLASS float_to_stringt: public TExtends {
+public:
+    typedef TExtends extends;
+    float_to_stringt(float to) {
+        this->append_float(to);
+    }
+};
+typedef float_to_stringt<char> float_to_string;
+typedef float_to_stringt<tchar_t> float_to_tstring;
+typedef float_to_stringt<wchar_t> float_to_wstring;
+
+///////////////////////////////////////////////////////////////////////
+///  Class: double_to_stringt
+///////////////////////////////////////////////////////////////////////
+template
+<typename TChar = char,
+ class TExtends = char_stringt<TChar> >
+
+class _EXPORT_CLASS double_to_stringt: public TExtends {
+public:
+    typedef TExtends extends;
+    double_to_stringt(double to) {
+        this->append_double(to);
+    }
+};
+typedef double_to_stringt<char> double_to_string;
+typedef double_to_stringt<tchar_t> double_to_tstring;
+typedef double_to_stringt<wchar_t> double_to_wstring;
+
+///////////////////////////////////////////////////////////////////////
 ///  Class: signed_to_stringt
 ///////////////////////////////////////////////////////////////////////
 template
