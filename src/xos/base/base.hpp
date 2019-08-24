@@ -44,6 +44,7 @@ public:
     }
 };
 typedef implement_baset<> implement_base;
+typedef implement_base implement;
 
 typedef implement_base baset_implements;
 ///////////////////////////////////////////////////////////////////////
@@ -61,6 +62,7 @@ public:
     }
 };
 typedef baset<> base;
+typedef base extend;
 
 ///
 /// mseconds_ seconds / mseconds / useconds / nseconds
@@ -72,10 +74,28 @@ inline mseconds_t mseconds_mseconds
 (mseconds_t mseconds) { return mseconds % 1000; }
 
 inline useconds_t mseconds_useconds
-(mseconds_t mseconds) { return mseconds_mseconds(mseconds) * 1000; }
+(mseconds_t mseconds) { return mseconds * 1000; }
 
 inline nseconds_t mseconds_nseconds
 (mseconds_t mseconds) { return mseconds_useconds(mseconds) * 1000; }
+
+inline mseconds_t seconds_mseconds
+(seconds_t seconds) { return seconds * 1000; }
+
+inline mseconds_t seconds_useconds
+(seconds_t seconds) { return seconds_mseconds(seconds) * 1000; }
+
+inline mseconds_t seconds_nseconds
+(seconds_t seconds) { return seconds_useconds(seconds) * 1000; }
+
+inline useconds_t nseconds_useconds
+(nseconds_t nseconds) { return nseconds / 1000; }
+
+inline mseconds_t nseconds_mseconds
+(nseconds_t nseconds) { return nseconds_useconds(nseconds) / 1000; }
+
+inline mseconds_t nseconds_seconds
+(nseconds_t nseconds) { return nseconds_mseconds(nseconds) / 1000; }
 
 ///
 /// to_ pointer / unsigned / signed / wchar / tchar / char / bool

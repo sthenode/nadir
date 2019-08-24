@@ -21,7 +21,7 @@
 #ifndef _XOS_CONSOLE_LIB_VERSION_MAIN_HPP
 #define _XOS_CONSOLE_LIB_VERSION_MAIN_HPP
 
-#include "xos/console/getopt/main.hpp"
+#include "xos/console/lib/version/main_opt.hpp"
 #include "xos/lib/nadir/version.hpp"
 
 namespace xos {
@@ -29,8 +29,8 @@ namespace console {
 namespace lib {
 namespace version {
 
-typedef xos::console::getopt::main::implements maint_implements;
-typedef xos::console::getopt::main maint_extends;
+typedef main_opt maint_extends;
+typedef maint_extends::implements maint_implements;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: maint
 ///////////////////////////////////////////////////////////////////////
@@ -41,6 +41,7 @@ class _EXPORT_CLASS maint: virtual public TImplements, public TExtends {
 public:
     typedef TImplements implements;
     typedef TExtends extends;
+    typedef maint derives;
 
     typedef TLibVersion lib_version_t;
     typedef typename implements::string_t string_t;
@@ -48,21 +49,25 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-private:
-    maint(const maint &copy) {
-    }
-public:
-    maint() {
+    maint(): run_(0) {
     }
     virtual ~maint() {
+    }
+private:
+    maint(const maint &copy) {
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
+    int (derives::*run_)(int argc, char_t** argv, char_t** env);
     virtual int run(int argc, char_t** argv, char_t** env) {
         int err = 0;
-        err = this->version_run(argc, argv, env);
+        if (run_) {
+            err = (this->*run_)(argc, argv, env);
+        } else {
+            err = this->version_run(argc, argv, env);
+        }
         return err;
     }
     virtual int version_run(int argc, char_t** argv, char_t** env) {
@@ -74,6 +79,17 @@ protected:
         return err;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_version_option
+    (int optval, const char_t* optarg,
+     const char_t* optname, int optind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        run_ = &derives::version_run;
+        return err;
+    }
+    
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 }; /// class _EXPORT_CLASS maint

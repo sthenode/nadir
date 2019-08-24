@@ -153,6 +153,13 @@ public:
     typedef TImplements implements;
     typedef TExtends extends;
 
+    lockt(locked& _locked, mseconds_t milliseconds): locked_(_locked) {
+        lock_status status = lock_failed;
+        if (lock_success != (status = locked_.timed_lock(milliseconds))) {
+            lock_exception e(status);
+            throw (e);
+        }
+    }
     lockt(locked& _locked): locked_(_locked) {
         if (!(locked_.lock())) {
             lock_exception e(lock_failed);
@@ -173,6 +180,38 @@ protected:
     locked& locked_;
 };
 typedef lockt<> lock;
+
+///////////////////////////////////////////////////////////////////////
+///  Class: try_lockt
+///////////////////////////////////////////////////////////////////////
+template 
+<class TImplements = lockt_implements, class TExtends = lockt_extends>
+class _EXPORT_CLASS try_lockt: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements implements;
+    typedef TExtends extends;
+
+    try_lockt(locked& _locked): locked_(_locked) {
+        lock_status status = lock_failed;
+        if (lock_success != (status = locked_.try_lock())) {
+            lock_exception e(status);
+            throw (e);
+        }
+    }
+    virtual ~try_lockt() {
+        if (!(locked_.unlock())) {
+            lock_exception e(unlock_failed);
+            throw (e);
+        }
+    }
+private:
+    try_lockt(const try_lockt &copy) {
+    }
+
+protected:
+    locked& locked_;
+};
+typedef try_lockt<> try_lock;
 
 } /// namespace xos
 

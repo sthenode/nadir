@@ -25,6 +25,9 @@
 
 namespace xos {
 
+///////////////////////////////////////////////////////////////////////
+///  Enum: acquire_status
+///////////////////////////////////////////////////////////////////////
 typedef int acquire_status;
 enum {
     release_success,
@@ -41,7 +44,7 @@ enum {
     release_interrupted,
     release_invalid
 };
-template <class TString>
+template <class TString = char_string>
 inline const TString acquire_status_to_string(acquire_status status) {
     switch (status) {
     case acquire_success: return TString("acquire_success");
@@ -154,8 +157,9 @@ public:
     typedef TExtends extends;
 
     acquiret(acquired& _acquired, mseconds_t time): acquired_(_acquired) {
-        if (acquire_success != (acquired_.timed_acquire(time))) {
-            acquire_exception e(acquire_failed);
+        acquire_status status = acquire_failed;
+        if (acquire_success != (status = acquired_.timed_acquire(time))) {
+            acquire_exception e(status);
             throw (e);
         }
     }
@@ -175,6 +179,34 @@ protected:
     acquired& acquired_;
 };
 typedef acquiret<> acquire;
+
+///////////////////////////////////////////////////////////////////////
+///  Class: try_acquiret
+///////////////////////////////////////////////////////////////////////
+template 
+<class TImplements = acquiret_implements, class TExtends = acquiret_extends>
+class _EXPORT_CLASS try_acquiret: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements implements;
+    typedef TExtends extends;
+
+    try_acquiret(acquired& _acquired): acquired_(_acquired) {
+        acquire_status status = acquire_failed;
+        if (acquire_success != (status = acquired_.try_acquire())) {
+            acquire_exception e(status);
+            throw (e);
+        }
+    }
+    virtual ~try_acquiret() {
+    }
+private:
+    try_acquiret(const try_acquiret &copy) {
+    }
+
+protected:
+    acquired& acquired_;
+};
+typedef try_acquiret<> try_acquire;
 
 typedef implement_base releaset_implements;
 typedef base releaset_extends;

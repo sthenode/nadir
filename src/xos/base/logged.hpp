@@ -40,11 +40,23 @@ public:
     virtual bool is_logged() const {
         return true;
     }
+
     virtual bool set_is_err_logged(bool to = true) {
         return is_err_logged();
     }
     virtual bool is_err_logged() const {
         return true;
+    }
+
+    virtual bool set_is_logged_debug(mseconds_t threashold) {
+        return is_logged_debug(threashold);
+    }
+    virtual bool is_logged_debug(mseconds_t milliseconds) const {
+        mseconds_t threashold = is_logged_debug_threashold();
+        return (milliseconds >= threashold);
+    }
+    virtual mseconds_t is_logged_debug_threashold() const {
+        return 500;
     }
 };
 typedef loggedt<> logged;
