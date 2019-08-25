@@ -29,7 +29,58 @@ namespace app {
 namespace console {
 namespace nadir {
 
-typedef xos::console::lib::version::maint<xos::lib::nadir::version> main;
+///////////////////////////////////////////////////////////////////////
+///  Class: maint
+///////////////////////////////////////////////////////////////////////
+template 
+<class TImplements = xos::console::lib::version::maint_implements, 
+ class TExtends = xos::console::lib::version::maint<xos::lib::nadir::version> >
+class _EXPORT_CLASS maint: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements implements;
+    typedef TExtends extends;
+    typedef maint derives;
+
+    typedef typename implements::char_t char_t;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    maint() {
+    }
+    virtual ~maint() {
+    }
+private:
+    maint(const maint &copy) {
+    }
+
+protected:
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    int (derives::*run_)(int argc, char_t** argv, char_t** env);
+    virtual int run(int argc, char_t** argv, char_t** env) {
+        if ((run_)) {
+            return (this->*run_)(argc, argv, env);
+        }
+        return default_run(argc, argv, env);
+    }
+    virtual int default_run(int argc, char_t** argv, char_t** env) {
+        int err = this->version_run(argc, argv, env);
+        return err;
+    }
+    virtual int this_version_run(int argc, char_t** argv, char_t** env) {
+        int err = this->version_run(argc, argv, env);
+        return err;
+    }
+    virtual int set_version_run(int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        run_ = &derives::this_version_run;
+        return err;
+    }
+    
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+typedef maint<> main;
 
 } /// namespace nadir
 } /// namespace console

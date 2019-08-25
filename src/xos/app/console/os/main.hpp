@@ -117,6 +117,11 @@ protected:
         int err = this->version_run(argc, argv, env);
         return err;
     }
+    virtual int set_version_run(int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        run_ = &derives::this_version_run;
+        return err;
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -177,17 +182,6 @@ protected:
      int argc, char_t**argv, char_t**env) {
         int err = 0;
         windows_run_ = &derives::crt_windows_run;
-        return err;
-    }
-    
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual int on_version_option
-    (int optval, const char_t* optarg,
-     const char_t* optname, int optind,
-     int argc, char_t**argv, char_t**env) {
-        int err = 0;
-        run_ = &derives::this_version_run;
         return err;
     }
     

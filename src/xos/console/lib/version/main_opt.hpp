@@ -88,11 +88,15 @@ private:
 protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual int set_version_run(int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        return err;
+    }
     virtual int on_version_option
     (int optval, const char_t* optarg,
      const char_t* optname, int optind,
      int argc, char_t**argv, char_t**env) {
-        int err = 0;
+        int err = set_version_run(argc, argv, env);
         return err;
     }
     

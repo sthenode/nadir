@@ -78,13 +78,7 @@ protected:
         this->outlln("library ", name, " version = ", version.chars(), NULL);
         return err;
     }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual int on_version_option
-    (int optval, const char_t* optarg,
-     const char_t* optname, int optind,
-     int argc, char_t**argv, char_t**env) {
+    virtual int set_version_option(int argc, char_t**argv, char_t**env) {
         int err = 0;
         run_ = &derives::version_run;
         return err;
