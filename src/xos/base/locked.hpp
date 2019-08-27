@@ -141,7 +141,7 @@ public:
 };
 typedef unlockedt<> unlocked;
 
-typedef implement_base lockt_implements;
+typedef unlocked lockt_implements;
 typedef base lockt_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: lockt
@@ -153,31 +153,45 @@ public:
     typedef TImplements implements;
     typedef TExtends extends;
 
-    lockt(locked& _locked, mseconds_t milliseconds): locked_(_locked) {
+    lockt(locked& _locked, mseconds_t milliseconds): locked_(_locked), unlocked_(false) {
         lock_status status = lock_failed;
         if (lock_success != (status = locked_.timed_lock(milliseconds))) {
             lock_exception e(status);
             throw (e);
         }
     }
-    lockt(locked& _locked): locked_(_locked) {
+    lockt(locked& _locked): locked_(_locked), unlocked_(false) {
         if (!(locked_.lock())) {
             lock_exception e(lock_failed);
             throw (e);
         }
     }
     virtual ~lockt() {
-        if (!(locked_.unlock())) {
-            lock_exception e(unlock_failed);
-            throw (e);
+        if (!(unlocked())) {
+            set_unlocked();
+            if (!(locked_.unlock())) {
+                lock_exception e(unlock_failed);
+                throw (e);
+            }
         }
     }
 private:
-    lockt(const lockt &copy) {
+    lockt(const lockt &copy): locked_(*this), unlocked_(false) {
+    }
+    lockt(): locked_(*this), unlocked_(false) {
+    }
+
+public:
+    virtual bool set_unlocked(bool to = true) {
+        return unlocked_ = to;
+    }
+    virtual bool unlocked() const {
+        return unlocked_;
     }
 
 protected:
     locked& locked_;
+    bool unlocked_;
 };
 typedef lockt<> lock;
 

@@ -79,6 +79,9 @@ inline useconds_t mseconds_useconds
 inline nseconds_t mseconds_nseconds
 (mseconds_t mseconds) { return mseconds_useconds(mseconds) * 1000; }
 
+inline nseconds_t useconds_nseconds
+(useconds_t useconds) { return useconds * 1000; }
+
 inline mseconds_t seconds_mseconds
 (seconds_t seconds) { return seconds * 1000; }
 
@@ -94,7 +97,7 @@ inline useconds_t nseconds_useconds
 inline mseconds_t nseconds_mseconds
 (nseconds_t nseconds) { return nseconds_useconds(nseconds) / 1000; }
 
-inline mseconds_t nseconds_seconds
+inline seconds_t nseconds_seconds
 (nseconds_t nseconds) { return nseconds_mseconds(nseconds) / 1000; }
 
 ///

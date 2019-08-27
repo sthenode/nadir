@@ -190,6 +190,13 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    waitt(waited& _waited, mseconds_t milliseconds): waited_(_waited) {
+        wait_status status = wait_failed;
+        if (wait_success != (status = waited_.timed_wait(milliseconds))) {
+            wait_exception e(status);
+            throw (e);
+        }
+    }
     waitt(waited& _waited): waited_(_waited) {
         if (!(waited_.wait())) {
             wait_exception e(wait_failed);
@@ -208,6 +215,38 @@ protected:
     waited& waited_;
 };
 typedef waitt<> wait;
+
+///////////////////////////////////////////////////////////////////////
+///  Class: try_waitt
+///////////////////////////////////////////////////////////////////////
+template 
+<class TImplements = waitt_implements, class TExtends = waitt_extends>
+class _EXPORT_CLASS try_waitt: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements implements;
+    typedef TExtends extends;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    try_waitt(waited& _waited): waited_(_waited) {
+        wait_status status = wait_failed;
+        if (wait_success != (status = waited_.try_wait())) {
+            wait_exception e(status);
+            throw (e);
+        }
+    }
+    virtual ~try_waitt() {
+    }
+private:
+    try_waitt(const try_waitt &copy) {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    waited& waited_;
+};
+typedef try_waitt<> try_wait;
 
 } /// namespace xos
 
