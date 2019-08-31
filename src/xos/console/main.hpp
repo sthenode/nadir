@@ -87,6 +87,16 @@ private:
     }
 
 public:
+    virtual ssize_t write_out(const char_t* chars, ssize_t size) {
+        ssize_t count = 0, amount = 0;
+        if (0 < (amount = this->out(chars, size))) {
+            this->out_flush();
+            count += amount;
+        }
+        return count;
+    }
+
+public:
     static int the_main(int argc, char_t** argv, char_t** env) {
         int err = 1;
         derives* the_main = 0;
