@@ -44,6 +44,7 @@ public:
     typedef maint derives;
 
     typedef TLibVersion lib_version_t;
+    typedef typename implements::file_t file_t;
     typedef typename implements::string_t string_t;
     typedef typename implements::char_t char_t;
 

@@ -72,6 +72,7 @@ public:
     typedef TImplements implements;
     typedef TExtends extends;
 
+    typedef typename implements::file_t file_t;
     typedef typename implements::string_t string_t;
     typedef typename implements::char_t char_t;
 

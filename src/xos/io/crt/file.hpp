@@ -303,7 +303,7 @@ public:
         return XOS_IO_CRT_FILE_MODE_WRITE_BINARY_APPEND;
     }
 };
-typedef filet<stream> file;
+typedef filet<stream> _file;
 
 typedef filet<char_stream> char_file;
 typedef filet<tchar_stream> tchar_file;
