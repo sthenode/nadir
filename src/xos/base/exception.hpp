@@ -28,13 +28,15 @@ namespace xos {
 typedef int exception_status;
 enum {
     exception_success,
-    exception_failed
+    exception_failed,
+    exception_unexpected
 };
 template <class TString>
 inline TString exception_status_to_string(exception_status status) {
     switch (status) {
     case exception_success: return TString("exception_success");
     case exception_failed: return TString("exception_failed");
+    case exception_unexpected: return TString("exception_unexpected");
     }
     return TString("unknown");
 }

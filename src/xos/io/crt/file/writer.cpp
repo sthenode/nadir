@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2018 $organization$
+/// Copyright (c) 1988-2019 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,53 +13,24 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: reader.hpp
+///   File: writer.cpp
 ///
 /// Author: $author$
-///   Date: 5/2/2018
+///   Date: 9/9/2019
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_IO_READER_HPP
-#define _XOS_IO_READER_HPP
-
-#include "xos/io/seeker.hpp"
+#include "xos/io/crt/file/writer.hpp"
 
 namespace xos {
 namespace io {
+namespace crt {
+namespace file {
 
-typedef seeker readert_implements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: readert
+///  Class: writert
 ///////////////////////////////////////////////////////////////////////
-template <class TImplements = readert_implements>
 
-class _EXPORT_CLASS readert: virtual public TImplements {
-public:
-    typedef TImplements implements;
-
-    typedef typename implements::what_t what_t;
-    typedef typename implements::sized_t sized_t;
-    typedef typename implements::endof_t endof_t;
-    static const endof_t endof = implements::endof;
-
-    virtual ssize_t read(what_t* what, size_t size) {
-        ssize_t count = 0;
-        return count;
-    }    
-    virtual ssize_t fill() {
-        ssize_t count = 0;
-        return count;
-    }    
-};
-typedef readert<seeker> reader;
-
-typedef readert<char_seeker> char_reader;
-typedef readert<tchar_seeker> tchar_reader;
-typedef readert<wchar_seeker> wchar_reader;
-
-typedef readert<byte_seeker> byte_reader;
-typedef readert<word_seeker> word_reader;
-
+} /// namespace file
+} /// namespace crt
 } /// namespace io
 } /// namespace xos
 
-#endif /// _XOS_IO_READER_HPP 

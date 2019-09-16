@@ -68,6 +68,29 @@ public:
         }
         return count;
     }    
+    virtual ssize_t writel(const what_t* what, ...) {
+        ssize_t count = 0;
+        va_list va;
+        va_start(va, what);
+        count = writev(what, va);
+        va_end(va);
+        return count;
+    }    
+    virtual ssize_t writev(const what_t* what, va_list va) {
+        typedef const sized_t* const_sized_pointer;
+        ssize_t count = 0, amount = 0;
+        for (count = 0; what; count += amount) {
+            if (0 > (amount = write(what))) {
+                return count;
+            }
+            what = va_arg(va, const_sized_pointer);
+        }
+        return count;
+    }    
+    virtual ssize_t flush() {
+        ssize_t count = 0;
+        return count;
+    }    
 };
 typedef writert<sequence> writer;
 

@@ -166,6 +166,16 @@ public:
     virtual const char_t* chars() const {
         return this->c_str();
     }
+
+    virtual int compare(const string_t& to) const {
+        int unequal = extends::compare(to);
+        return unequal;
+    }
+    virtual int compare(const char_t* to, ssize_t length) const {
+        int unequal = implements::compare
+        (this->c_str(), this->length(), to, length);
+        return unequal;
+    }
 }; /// class _EXPORT_CLASS stringt
 
 typedef stringt<byte_t> byte_string;

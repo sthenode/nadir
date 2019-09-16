@@ -59,6 +59,10 @@ public:
     typedef TUnattached unattached_t;
     enum { unattached = VUnattached };
     
+    enum mode_t { mode_binary, mode_text };
+    
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     readert(attached_t attached, bool is_open): extends(attached, is_open) {
     }
     readert(attached_t attached): extends(attached) {
@@ -75,29 +79,34 @@ public:
         }
     }
 
-    virtual bool open(const char* name) {
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool open(const char* name, mode_t mode = mode_binary) {
         if ((this->closed())) {
             attached_t detached = 0;
-            if ((detached = open_attached(name))) {
+            if ((detached = open_attached(name, mode))) {
                 this->attach_opened(detached);
                 return true;
             }
         }
         return false;
     }
-    virtual attached_t open_attached(const char* name) {
+    virtual attached_t open_attached(const char* name, mode_t mode = mode_binary) {
         attached_t detached = 0;
-        if ((detached = open_detached(name))) {
+        if ((detached = open_detached(name, mode))) {
             this->attach(detached);
         }
         return detached;
     }
-    virtual attached_t open_detached(const char* name) const {
-        const char* mode = mode_read_binary();
-        if ((name) && (name[0]) && (mode) && (mode[0])) {
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual attached_t open_detached(const char* name, mode_t mode = mode_binary) const {
+        const char* read_mode = (mode != mode_binary)?(mode_read()):(mode_read_binary());
+        if ((name) && (name[0]) && (read_mode) && (read_mode[0])) {
             attached_t detached = 0;
-            if (!(detached = ::fopen(name, mode))) {
-                LOG_ERROR("...failed errno = " << errno << " on ::fopen(\"" << name << "\", \"" << mode << "\")")
+            if (!(detached = ::fopen(name, read_mode))) {
+                LOG_ERROR("...failed errno = " << errno << " on ::fopen(\"" << name << "\", \"" << read_mode << "\")")
             }
             return detached;
         }
@@ -115,6 +124,8 @@ public:
         return false;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual ssize_t readfv(const char* format, va_list va) {
         attached_t detached = 0;
         if ((format) && (detached = this->attached_to())) {
@@ -153,6 +164,8 @@ public:
         return 0;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual ssize_t seek(ssize_t offset, int whence) {
         attached_t detached = 0;
         if ((detached = this->attached_to())) {
@@ -183,12 +196,23 @@ public:
         return -1;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual const char* mode_read() const {
         return XOS_IO_CRT_FILE_MODE_READ;
     }
     virtual const char* mode_read_binary() const {
         return XOS_IO_CRT_FILE_MODE_READ_BINARY;
     }
+    virtual mode_t binary_mode() const {
+        return mode_binary;
+    }
+    virtual mode_t text_mode() const {
+        return mode_text;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 };
 typedef readert<io::reader> reader;
 
