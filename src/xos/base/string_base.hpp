@@ -25,35 +25,27 @@
 
 namespace xos {
 
-typedef implement_base string_base_implementt_implements;
-///////////////////////////////////////////////////////////////////////
-///  Class: string_base_implementt
-///////////////////////////////////////////////////////////////////////
-template <class TImplements = string_base_implementt_implements>
-class _EXPORT_CLASS string_base_implementt: virtual public TImplements {
-public:
-    typedef TImplements implements;
-};
-typedef string_base_implementt<> string_base_implement;
-
-typedef string_base_implement string_baset_implements;
-typedef base string_baset_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: string_baset
 ///////////////////////////////////////////////////////////////////////
 template 
 <typename TChar = char_t, size_t VDefaultSize = 128,
  typename TEndChar = TChar, TEndChar VEndChar = 0,
- class TImplements = string_baset_implements, class TExtends = string_baset_extends>
+ class TImplements = implement_base, class TExtends = base>
+
 class _EXPORT_CLASS string_baset: virtual public TImplements, public TExtends {
 public:
     typedef TImplements implements;
     typedef TExtends extends;
+    typedef string_baset derives;
+
     typedef TChar char_t;
     typedef TEndChar end_char_t;
     enum { default_size = VDefaultSize };
     enum { end_char = VEndChar };
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     string_baset(const char_t* chars, size_t length) {
         construct();
         append(chars, length);
@@ -62,7 +54,7 @@ public:
         construct();
         append(chars);
     }
-    string_baset(const string_baset &copy) {
+    string_baset(const derives &copy) {
         construct();
         append(copy.c_str(), copy.length());
     }
@@ -73,20 +65,22 @@ public:
         destruct();
     }
 
-    string_baset& assign(const char_t* chars, size_t length) {
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual derives& assign(const char_t* chars, size_t length) {
         clear();
         return append(chars, length);
     }
-    string_baset& assign(const char_t* chars) {
+    virtual derives& assign(const char_t* chars) {
         clear();
         return append(chars);
     }
-    string_baset& assign(const string_baset& copy) {
+    virtual derives& assign(const derives& copy) {
         clear();
         return append(copy.c_str(), copy.length());
     }
 
-    string_baset& append(const char_t* chars, size_t length) {
+    virtual derives& append(const char_t* chars, size_t length) {
         if ((chars) && (0 < length)) {
             size_t newSize = (tell_+length);
             if (size_ <= newSize) {
@@ -105,14 +99,14 @@ public:
         }
         return *this;
     }
-    string_baset& append(const char_t* chars) {
+    virtual derives& append(const char_t* chars) {
         return append(chars, _length_of(chars));
     }
-    string_baset& append(const string_baset& copy) {
+    virtual derives& append(const derives& copy) {
         return append(copy.c_str(), copy.length());
     }
 
-    string_baset& clear() {
+    virtual derives& clear() {
         if ((write_buffer_)) {
             if (size_ > (length_ = (tell_ = 0))) {
                 write_buffer_[tell_] = ((char_t)end_char);
@@ -121,7 +115,18 @@ public:
         return *this;
     }
 
-    virtual int compare(const string_baset& to) const {
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    derives& operator = (const derives& copy) {
+        return assign(copy);
+    }
+    int operator != (const derives& to) {
+        return compare(to);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int compare(const derives& to) const {
         return compare(to.c_str(), to.length());
     }
     virtual int compare(const char_t* toChars, size_t toLength) const {
@@ -161,6 +166,8 @@ public:
         return compare(toChars, _length_of(toChars));
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual char_t* buffer() const {
         return str();
     }
@@ -179,6 +186,8 @@ public:
     }
 
 protected:
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual void construct() {
         free_buffer_ = fixed_size_ = false;
         size_ = default_size;
@@ -193,6 +202,8 @@ protected:
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual size_t adjust_size(size_t newSize) {
         if (write_buffer_) {
             if (size_ < (newSize)) {
@@ -250,6 +261,8 @@ protected:
         return ((size/default_size)+1)*default_size;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual size_t _copy_to(char_t* to, const char_t* from, size_t size) const {
         size_t length = 0;
 
@@ -268,6 +281,8 @@ protected:
         return length;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual char_t* _alloc_buffer(size_t size) const {
         char_t* chars = new char_t[size];
         return chars;
@@ -276,6 +291,8 @@ protected:
         delete[] buffer;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 protected:
     bool free_buffer_, fixed_size_;
     size_t size_, length_, tell_;

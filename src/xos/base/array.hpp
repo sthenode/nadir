@@ -18,38 +18,30 @@
 /// Author: $author$
 ///   Date: 4/1/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_ARRAY_HPP
-#define _XOS_ARRAY_HPP
+#ifndef _XOS_BASE_ARRAY_HPP
+#define _XOS_BASE_ARRAY_HPP
 
 #include "xos/base/to_char.hpp"
 
 namespace xos {
 
-typedef implement_base array_implementt_implements;
-///////////////////////////////////////////////////////////////////////
-///  Class: array_implementt
-///////////////////////////////////////////////////////////////////////
-template <class TImplements = array_implementt_implements>
-class _EXPORT_CLASS array_implementt: virtual public TImplements {
-public:
-    typedef TImplements implements;
-};
-typedef array_implementt<> array_implement;
-
-typedef array_implement arrayt_implements;
-typedef base arrayt_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: arrayt
 ///////////////////////////////////////////////////////////////////////
 template 
 <typename TWhat = char, size_t VDefaultSize = 128,
- class TImplements = arrayt_implements, class TExtends = arrayt_extends>
+ class TImplements = implement_base, class TExtends = base>
+
 class _EXPORT_CLASS arrayt: virtual public TImplements, public TExtends {
 public:
     typedef TImplements implements;
     typedef TExtends extends;
+    typedef arrayt derives;
+
     typedef TWhat what_t;
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     arrayt(const TWhat* elements, size_t length)
     : elements_(sized_elements_), size_(VDefaultSize), length_(0) {
         append(elements, length);
@@ -69,6 +61,8 @@ public:
         clear();
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual arrayt& assign(const TWhat* elements, size_t elements_length){
         size_t count = 0;
         size_t new_elements_length = 0;
@@ -102,6 +96,8 @@ public:
         return *this;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual size_t set(const TWhat& element){
         return set(element, length_);
     }
@@ -134,6 +130,8 @@ public:
         return count;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual size_t set_length(ssize_t to_length){
         size_t to_size = 0;
         if (!elements_) {
@@ -164,6 +162,8 @@ public:
         return size_;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual TWhat* has_elements(size_t& size, size_t& length) const {
         size = size_;
         if (0 < (length = length_)) {
@@ -205,6 +205,8 @@ public:
 #endif /// !defined(__MSC__)
 
 protected:
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual size_t adjust_to_size(size_t size) {
         size_t count = 0;
         TWhat* elements = 0;
@@ -250,6 +252,8 @@ protected:
         return count;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual size_t set_elements
     (TWhat* to, const TWhat& from, size_t size) const {
         size_t count = 0;
@@ -271,6 +275,8 @@ protected:
         return count;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 protected:
     TWhat sized_elements_[VDefaultSize], *elements_;
     size_t size_, length_;
@@ -278,7 +284,6 @@ protected:
 typedef arrayt<byte_t> byte_array;
 typedef arrayt<word_t> word_array;
 
-typedef arrayt_implements char_arrayt_implements;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: char_arrayt
 ///////////////////////////////////////////////////////////////////////
@@ -288,17 +293,22 @@ template
  class TCharTo = to_chart<TChar, char>, 
  class TWCharTo = to_chart<TChar, wchar_t>,
  class TExtends = arrayt<char, VDefaultSize>,
- class TImplements = char_arrayt_implements>
+ class TImplements = typename TExtends::implements>
+
 class _EXPORT_CLASS char_arrayt: virtual public TImplements, public TExtends {
 public:
     typedef TImplements implements;
     typedef TExtends extends;
+    typedef char_arrayt derives;
+
     typedef TCharTo char_to;
     typedef TWCharTo wchar_to;
     typedef TChar char_t;
     typedef TEnd end_t;
     static const end_t end = VEnd;
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     char_arrayt(const char* chars, size_t length) {
         this->append(chars, length);
     }
@@ -324,6 +334,8 @@ public:
     virtual ~char_arrayt() {
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual char_arrayt& assign(const char& c) {
         this->clear();
         return append(c);
@@ -350,6 +362,8 @@ public:
         return append(chars, length);
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual char_arrayt& append(const char& c) {
         return append(&c, 1);
     }
@@ -418,4 +432,4 @@ typedef char_arrayt<wchar_t> wchar_array;
 
 } /// namespace xos
 
-#endif /// _XOS_ARRAY_HPP 
+#endif /// _XOS_BASE_ARRAY_HPP 

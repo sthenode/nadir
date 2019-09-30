@@ -25,6 +25,9 @@
 
 namespace xos {
 
+///////////////////////////////////////////////////////////////////////
+/// Enum: join_status
+///////////////////////////////////////////////////////////////////////
 typedef int join_status;
 enum {
     fork_success,
@@ -40,7 +43,6 @@ enum {
     fork_interrupted,
     fork_invalid
 };
-
 template <class TString>
 inline TString join_status_to_string(join_status status) {
     switch (status) {
@@ -73,6 +75,8 @@ public:
     typedef typename implements::string_t string_t;
     typedef typename implements::char_t char_t;
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     join_exceptiont(status_t status): extends(status) {
     }
     join_exceptiont(const join_exceptiont &copy): extends(copy) {
@@ -80,21 +84,24 @@ public:
     virtual ~join_exceptiont() {
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual string_t status_to_string() const {
         return join_status_to_string<string_t>(this->status());
     }
 };
 typedef join_exceptiont<> join_exception;
 
-typedef implement_base joinedt_implements;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: joinedt
 ///////////////////////////////////////////////////////////////////////
-template <class TImplements = joinedt_implements>
+template <class TImplements = implement_base>
 class _EXPORT_CLASS joinedt: virtual public TImplements {
 public:
     typedef TImplements implements;
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual bool joined() {
         if ((this->is_forked())) {
             return this->join();
@@ -114,11 +121,16 @@ public:
         return join_failed;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual bool set_is_forked(bool to = true) {
-        return false;
+        return is_forked();
     }
     virtual bool is_forked() const {
         return false;
+    }
+    virtual bool is_joined() const {
+        return !is_forked();
     }
 };
 typedef joinedt<> joined;

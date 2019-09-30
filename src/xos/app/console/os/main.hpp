@@ -125,6 +125,14 @@ protected:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual int set_posix_run(int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        run_ = &derives::posix_run;
+        return err;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual int on_windows_option
     (int optval, const char_t* optarg,
      const char_t* optname, int optind,
@@ -154,7 +162,7 @@ protected:
      const char_t* optname, int optind,
      int argc, char_t**argv, char_t**env) {
         int err = 0;
-        run_ = &derives::posix_run;
+        set_posix_run(argc, argv, env);
         return err;
     }
     virtual int on_solaris_option

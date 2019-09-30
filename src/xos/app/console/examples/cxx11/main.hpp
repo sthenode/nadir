@@ -16,41 +16,41 @@
 ///   File: main.hpp
 ///
 /// Author: $author$
-///   Date: 1/31/2019
+///   Date: 9/20/2019
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_CONSOLE_LIB_VERSION_MAIN_HPP
-#define _XOS_CONSOLE_LIB_VERSION_MAIN_HPP
+#ifndef XOS_APP_CONSOLE_EXAMPLES_CXX11_MAIN_HPP
+#define XOS_APP_CONSOLE_EXAMPLES_CXX11_MAIN_HPP
 
-#include "xos/console/lib/version/main_opt.hpp"
-#include "xos/lib/nadir/version.hpp"
+#include "xos/app/console/lib/version/main.hpp"
+#include <list>
 
 namespace xos {
+namespace app {
 namespace console {
-namespace lib {
-namespace version {
+namespace examples {
+namespace cxx11 {
 
-typedef main_opt maint_extends;
-typedef maint_extends::implements maint_implements;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: maint
 ///////////////////////////////////////////////////////////////////////
 template 
-<class TLibVersion = xos::lib::nadir::version,
- class TImplements = maint_implements, class TExtends = maint_extends>
+<class TVersion = xos::lib::nadir::version, 
+ class TExtends = console::lib::version::maint<TVersion>, 
+ class TImplements = typename TExtends::implements>
+
 class _EXPORT_CLASS maint: virtual public TImplements, public TExtends {
 public:
     typedef TImplements implements;
     typedef TExtends extends;
     typedef maint derives;
 
-    typedef TLibVersion lib_version_t;
     typedef typename implements::file_t file_t;
     typedef typename implements::string_t string_t;
     typedef typename implements::char_t char_t;
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    maint(): run_(0) {
+    maint() {
     }
     virtual ~maint() {
     }
@@ -58,46 +58,36 @@ private:
     maint(const maint &copy) {
     }
 
+protected:
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        char a[] = {'a', 'b', 'c', 'd'};
+        for (auto i : a) {
+            char a = ([](char a){ return a+1; })(i);
+            this->out(&a, 1);
+        }
+        o([](char &&a){ return a+1; }('X'));
+        this->outln();
+        return err;
+    }
+    virtual ssize_t o(char &&a) {
+        this->out(&a, 1);
+    }
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    int (derives::*run_)(int argc, char_t** argv, char_t** env);
-    virtual int run(int argc, char_t** argv, char_t** env) {
-        int err = 0;
-        if (run_) {
-            err = (this->*run_)(argc, argv, env);
-        } else {
-            err = this->version_run(argc, argv, env);
-        }
-        return err;
-    }
-    virtual int version_run(int argc, char_t** argv, char_t** env) {
-        const xos::lib::version& which_version = lib_version_t::which();
-        int err = version_run(which_version, argc, argv, env);
-        return err;
-    }
-    virtual int version_run
-    (const xos::lib::version& which_version, int argc, char_t** argv, char_t** env) {
-        int err = 0;
-        const string_t version = which_version.to_string();
-        const char_t* name = which_version.name();
-        this->outlln("library ", name, " version = ", version.chars(), NULL);
-        return err;
-    }
-    virtual int set_version_option(int argc, char_t**argv, char_t**env) {
-        int err = 0;
-        run_ = &derives::version_run;
-        return err;
-    }
-    
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
 }; /// class _EXPORT_CLASS maint
+
 typedef maint<> main;
 
-} /// namespace version
-} /// namespace lib
+
+} /// namespace cxx11
+} /// namespace examples
 } /// namespace console
+} /// namespace app
 } /// namespace xos
 
-#endif /// _XOS_CONSOLE_LIB_VERSION_MAIN_HPP 
+#endif /// ndef XOS_APP_CONSOLE_EXAMPLES_CXX11_MAIN_HPP
