@@ -26,7 +26,11 @@
 
 # libnadir TARGET
 #
+contains(CONFIG,c++11) {
+libnadir_TARGET = nadir11
+} else {
 libnadir_TARGET = nadir
+} #contains(CONFIG,c++11)
 libnadir_TEMPLATE = lib
 libnadir_CONFIG += staticlib
 

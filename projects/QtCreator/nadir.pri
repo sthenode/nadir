@@ -114,4 +114,9 @@ nadir_LIBS += \
 -L$${NADIR_LIB}/lib$${FRAMEWORK_NAME} \
 -l$${FRAMEWORK_NAME} \
 
+# nadir11 LIBS
+#
+nadir11_LIBS += \
+-L$${NADIR_LIB}/lib$${FRAMEWORK_NAME}11 \
+-l$${FRAMEWORK_NAME}11 \
 

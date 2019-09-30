@@ -78,3 +78,17 @@ nadir_LIBS += \
 } else {
 }
 
+# nadir11 LIBS
+#
+nadir11_LIBS += \
+$${rostra_LIBS} \
+$${build_nadir_LIBS} \
+-lpthread \
+-ldl \
+
+contains(NADIR_OS,linux) {
+nadir11_LIBS += \
+-lrt
+} else {
+}
+

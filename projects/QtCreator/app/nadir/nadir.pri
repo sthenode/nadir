@@ -55,6 +55,7 @@ $${nadir_DEFINES} \
 nadir_exe_HEADERS += \
 $${NADIR_SRC}/xos/base/locked.hpp \
 $${NADIR_SRC}/xos/io/logger.hpp \
+\
 $${NADIR_SRC}/xos/console/output.hpp \
 $${NADIR_SRC}/xos/console/std/output.hpp \
 $${NADIR_SRC}/xos/console/error.hpp \
@@ -68,19 +69,35 @@ $${NADIR_SRC}/xos/console/main_main.hpp \
 $${NADIR_SRC}/xos/console/getopt/main_opt.hpp \
 $${NADIR_SRC}/xos/console/getopt/main.hpp \
 $${NADIR_SRC}/xos/console/lib/version/main.hpp \
-$${NADIR_SRC}/xos/app/console/nadir/main.hpp \
+
+contains(CONFIG,c++11) {
+nadir_exe_HEADERS += \
+$${NADIR_SRC}/xos/app/console/examples/cxx11/main.hpp 
+} else {
+nadir_exe_HEADERS += \
+$${NADIR_SRC}/xos/app/console/nadir/main.hpp 
+} #contains(CONFIG,c++11)
 
 # nadir_exe SOURCES
 #
 nadir_exe_SOURCES += \
 $${NADIR_SRC}/xos/base/locked.cpp \
 $${NADIR_SRC}/xos/io/logger.cpp \
+\
 $${NADIR_SRC}/xos/console/std/output.cpp \
 $${NADIR_SRC}/xos/console/std/error.cpp \
 $${NADIR_SRC}/xos/console/std/input.cpp \
 $${NADIR_SRC}/xos/console/std/io.cpp \
+\
 $${NADIR_SRC}/xos/console/getopt/main_opt.cpp \
-$${NADIR_SRC}/xos/app/console/nadir/main.cpp \
+
+contains(CONFIG,c++11) {
+nadir_exe_SOURCES += \
+$${NADIR_SRC}/xos/app/console/examples/cxx11/main.cpp 
+} else {
+nadir_exe_SOURCES += \
+$${NADIR_SRC}/xos/app/console/nadir/main.cpp 
+} #contains(CONFIG,c++11)
 
 ########################################################################
 # nadir_exe FRAMEWORKS
@@ -90,7 +107,10 @@ $${nadir_FRAMEWORKS} \
 
 # nadir_exe LIBS
 #
+contains(CONFIG,c++11) {
 nadir_exe_LIBS += \
-$${nadir_LIBS} \
-
-
+$${nadir11_LIBS} 
+} else {
+nadir_exe_LIBS += \
+$${nadir_LIBS} 
+} #contains(CONFIG,c++11)
