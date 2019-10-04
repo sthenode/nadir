@@ -37,6 +37,9 @@ public:
     typedef TExtends extends;
     to_char_stringt(const to_char_stringt& copy): extends(copy) {}
     to_char_stringt() {}
+    virtual const TChar* operator()() {
+        return this->chars();
+    }
 protected:
     virtual const TChar* chars() const {
         return extends::chars();

@@ -86,12 +86,63 @@ private:
 public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual derives& assignl(const char_t* element, ...) {
+        if ((element) && (element[0])) {
+            va_list va;
+            va_start(va, element);
+            assignv(element, va);
+            va_end(va);
+        }
+        return *this;
+    }
+    virtual derives& assignv(const char_t* element, va_list va) {
+        clear();
+        append(element, va);
+        return *this;
+    }
     virtual derives& assign(const char_t** elements, size_t length, bool is_end = false) {
         size_t count = 0;
         clear();
-        append(elements, length);
+        append(elements, length, is_end);
         return *this;
     }
+    virtual derives& assign(const char_t* element, bool is_end = false) {
+        assign(&element, 1, is_end);
+        return *this;
+    }
+
+    virtual derives& assignl_end(const char_t* element, ...) {
+        if ((element) && (element[0])) {
+            va_list va;
+            va_start(va, element);
+            assignv_end(element, va);
+            va_end(va);
+        }
+        return *this;
+    }
+    virtual derives& assignv_end(const char_t* element, va_list va) {
+        assignv(element, va);
+        append_end();
+        return *this;
+    }
+    virtual derives& assign_end(const char_t** elements, size_t length) {
+        assign(elements, length);
+        append_end();
+        return *this;
+    }
+    virtual derives& assign_end(const char_t* element) {
+        assign(element);
+        append_end();
+        return *this;
+    }
+    virtual derives& assign_end() {
+        clear();
+        append_end();
+        return *this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual derives& appendl(const char_t* element, ...) {
         if ((element) && (element[0])) {
             va_list va;
@@ -136,10 +187,40 @@ public:
         }
         return *this;
     }
+    virtual derives& append(const char_t* element, bool is_end = false) {
+        append(&element, 1, is_end);
+        return *this;
+    }
+    
+    virtual derives& appendl_end(const char_t* element, ...) {
+        if ((element) && (element[0])) {
+            va_list va;
+            va_start(va, element);
+            appendv_end(element, va);
+            va_end(va);
+        }
+        return *this;
+    }
+    virtual derives& appendv_end(const char_t* element, va_list va) {
+        appendv(element, va);
+        append_end();
+        return *this;
+    }
+    virtual derives& append_end(const char_t** elements, size_t length) {
+        append(elements, length);
+        append_end();
+        return *this;
+    }
+    virtual derives& append_end(const char_t* element) {
+        append(element);
+        append_end();
+        return *this;
+    }
     virtual derives& append_end() {
         extends::append(&end_, 1);
         return *this;
     }
+
     virtual size_t clear() {
         size_t count = extends::clear();
         strings_.clear();
