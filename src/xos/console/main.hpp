@@ -120,16 +120,6 @@ protected:
 protected:
     virtual int run(int argc, char_t** argv, char_t** env) {
         int err = 0;
-        err = run(argc, argv);
-        return err;
-    }
-    virtual int run(int argc, char_t** argv) {
-        int err = 0;
-        err = run();
-        return err;
-    }
-    virtual int run() {
-        int err = 0;
         return err;
     }
     virtual int before_run(int argc, char_t** argv, char_t** env) {

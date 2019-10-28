@@ -135,6 +135,67 @@ public:
 };
 typedef joinedt<> joined;
 
+///////////////////////////////////////////////////////////////////////
+///  Class: joint
+///////////////////////////////////////////////////////////////////////
+template <class TImplements = implement, class TExtends = extend>
+class _EXPORT_CLASS joint: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements implements;
+    typedef TExtends extends;
+    typedef joint derives;
+    
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    joint(xos::joined& joined, mseconds_t milliseconds) {
+        join_status status = join_failed;
+        if (join_success != (status = joined.timed_join(milliseconds))) {
+            throw join_exception(status);
+        }
+    }
+    joint(xos::joined& joined) {
+        if (!(joined.join())) {
+            throw join_exception(join_failed);
+        }
+    }
+private:
+    joint(const joint &copy) {
+        throw exception(exception_unexpected);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+}; /// class _EXPORT_CLASS joint
+typedef joint<> join;
+
+///////////////////////////////////////////////////////////////////////
+///  Class: try_joint
+///////////////////////////////////////////////////////////////////////
+template <class TImplements = implement, class TExtends = extend>
+class _EXPORT_CLASS try_joint: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements implements;
+    typedef TExtends extends;
+    typedef try_joint derives;
+    
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    try_joint(xos::joined& joined) {
+        join_status status = join_failed;
+        if (join_success != (status = joined.try_join())) {
+            throw join_exception(status);
+        }
+    }
+private:
+    try_joint(const try_joint &copy) {
+        throw exception(exception_unexpected);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+}; /// class _EXPORT_CLASS try_joint
+typedef try_joint<> try_join;
+
 } /// namespace xos
 
 #endif /// _XOS_BASE_JOINED_HPP 
