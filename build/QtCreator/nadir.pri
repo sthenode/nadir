@@ -21,7 +21,11 @@
 # build QtCreator .pri file for nadir
 ########################################################################
 
+UNAME = $$system(uname)
+
+contains(UNAME,Darwin) {
 BUILD_OS = NADIR_OS
+} # contains(UNAME,Darwin)
 
 ########################################################################
 # rostra
